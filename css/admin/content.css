@@ -1,0 +1,92 @@
+
+        .main-content {
+            margin-left: 280px;
+            padding: 30px;
+            transition: margin-left 0.3s ease;
+            min-height: 100vh;
+        }
+
+        .sidebar.collapsed + .main-content {
+            margin-left: 80px;
+        }
+
+        .content-header {
+            background: white;
+           padding: 5px 10px;
+            border-radius: 15px;
+            box-shadow: 0 2px 20px rgba(139, 115, 85, 0.08);
+            margin-top: -23px;
+            margin-bottom: 30px;
+            border: 1px solid #f0ebe4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .content-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #5a4a3a;
+            margin-bottom: 8px;
+        }
+
+        .content-subtitle {
+            color: #8b7355;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b7355 0%, #a0896b 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #8b7355;
+            border: 1px solid #8b7355;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #8b7355;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #8b7355;
+            border: 1px solid #e8e2db;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            border-color: #8b7355;
+            background: #f8f6f3;
+        }

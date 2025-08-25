@@ -1,0 +1,199 @@
+
+        :root {
+            --primary: #8d6e63;
+            --secondary: #8a5a44;
+            --accent: #f8c537;
+            --light: #f9f5ff;
+            --dark: #2a2a2a;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+        }
+
+        .content-container {
+            flex: 1;
+            padding: 40px;
+            margin-left: 250px; /* Match this with sidebar width */
+            transition: margin-left 0.3s ease;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 40px;
+            margin-top: 30px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .page-title i {
+            margin-right: 15px;
+            font-size: 2rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #5a3f7a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(106, 76, 147, 0.3);
+        }
+
+        .btn-outline-secondary {
+            border-radius: 8px;
+            padding: 10px 25px;
+            font-weight: 500;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.25rem rgba(106, 76, 147, 0.25);
+        }
+
+        .section-divider {
+            height: 1px;
+            background: rgba(0,0,0,0.1);
+            margin: 30px 0;
+        }
+
+        .form-section-title {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-section-title i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        /* Sidebar styles */
+        /* .sidebar {
+            width: 250px;
+            background-color: var(--primary);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        } */
+
+        /* .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .sidebar-menu .nav-link {
+            color: rgba(255,255,255,0.8);
+            padding: 10px 20px;
+            margin: 5px 0;
+            border-radius: 0;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-menu .nav-link:hover, 
+        .sidebar-menu .nav-link.active {
+            color: white;
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .sidebar-menu .nav-link i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 992px) {
+            .sidebar {
+                margin-left: -250px;
+            }
+            
+            .content-container {
+                margin-left: 0;
+            }
+            
+            .sidebar.active {
+                margin-left: 0;
+            }
+            
+            .content-container.active {
+                margin-left: 250px;
+            }
+        } */
+
+        @media (max-width: 768px) {
+            .content-container {
+                padding: 25px;
+            }
+            
+            .form-card {
+                padding: 25px;
+            }
+            
+            .page-title {
+                font-size: 1.5rem;
+            }
+            
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .page-header a {
+                margin-top: 15px;
+            }
+        }
+  

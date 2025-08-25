@@ -1,0 +1,267 @@
+/* File: css/guestdash.css */
+    :root {
+      --primary: #5d4037;
+      --secondary: #8d6e63;
+      --accent: #d4a762;
+      --light: #f5f5f5;
+      --dark: #2a2a2a;
+      --success: #4caf50;
+      --warning: #ff9800;
+      --info: #2196f3;
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--dark);
+      background-color: #f9f9f9;
+      padding-top: 80px;
+    }
+    
+    h1, h2, h3, h4, h5 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+    }
+    
+    /* Premium Navigation */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      padding: 15px 0;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--primary) !important;
+    }
+    
+    .nav-link {
+      font-weight: 500;
+      color: var(--dark);
+      margin: 0 10px;
+      position: relative;
+    }
+    
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--accent);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover:after,
+    .nav-link.active:after {
+      width: 100%;
+    }
+    
+    .btn-premium {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 25px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(212, 167, 98, 0.3);
+    }
+    
+    .btn-premium:hover {
+      background: #c29555;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212, 167, 98, 0.4);
+    }
+    
+    /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      padding: 120px 0 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('../assets/images/hotel-exterior.jpg') center/cover no-repeat;
+      opacity: 0.15;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-title {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      color: var(--light);
+    }
+
+  
+    
+    .hero-subtitle {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+    }
+    
+    /* Quick Actions */
+    .quick-actions {
+      margin-top: -50px;
+      position: relative;
+      z-index: 3;
+    }
+    
+    .action-card {
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      height: 100%;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .action-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .action-icon {
+      width: 70px;
+      height: 70px;
+      background: rgba(93, 64, 55, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 25px;
+      color: var(--primary);
+      font-size: 1.8rem;
+    }
+    
+    .action-title {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    
+    /* Booking Table */
+    .booking-section {
+      padding: 80px 0;
+    }
+    
+    .section-title {
+      font-size: 2.2rem;
+      margin-bottom: 40px;
+      color: var(--primary);
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: var(--accent);
+    }
+    
+    .booking-table {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+    
+    .table thead th {
+      background: var(--primary);
+      color: white;
+      font-weight: 500;
+      padding: 15px 20px;
+      border: none;
+    }
+    
+    .table tbody tr {
+      transition: all 0.2s ease;
+    }
+    
+    .table tbody tr:hover {
+      background: rgba(93, 64, 55, 0.03);
+    }
+    
+    .badge {
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-weight: 500;
+      font-size: 0.8rem;
+    }
+    
+    /* Feedback Section */
+    .feedback-section {
+      background: linear-gradient(135deg, rgba(93, 64, 55, 0.03) 0%, rgba(255,255,255,0.1) 100%);
+      padding: 80px 0;
+      border-radius: 16px;
+    }
+    
+    .feedback-title {
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+      color: var(--primary);
+    }
+    
+    .form-control {
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 0.25rem rgba(212, 167, 98, 0.25);
+    }
+    
+    /* Footer */
+    .footer {
+      background: var(--primary);
+      color: white;
+      padding: 30px 0;
+      margin-top: 80px;
+    }
+    
+    @media (max-width: 991px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .hero-section {
+        padding: 100px 0 80px;
+      }
+      
+      .quick-actions {
+        margin-top: 0;
+      }
+      
+      .action-card {
+        margin-bottom: 20px;
+      }
+    }

@@ -1,0 +1,191 @@
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            opacity: 0;
+            /* transition: opacity 0.3s ease; */
+        }
+
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .staff-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 2px 20px rgba(139, 115, 85, 0.08);
+            border: 1px solid #f0ebe4;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .staff-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(139, 115, 85, 0.15);
+        }
+
+        .staff-header {
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #f8f6f3;
+        }
+
+        .staff-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8b7355 0%, #a0896b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+        .staff-info {
+            flex: 1;
+        }
+
+        .staff-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #5a4a3a;
+            margin-bottom: 4px;
+        }
+
+        .staff-role {
+            font-size: 14px;
+            color: #8b7355;
+            margin-bottom: 4px;
+        }
+
+        .staff-id {
+            font-size: 12px;
+            color: #8b7355;
+        }
+
+        .staff-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .staff-status.active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .staff-status.inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .staff-status.break {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .staff-details {
+            padding: 20px 25px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .detail-label {
+            font-size: 14px;
+            color: #8b7355;
+            font-weight: 500;
+        }
+
+        .detail-value {
+            font-size: 14px;
+            color: #5a4a3a;
+            font-weight: 600;
+        }
+
+        .staff-actions {
+            padding: 15px 25px 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .tooltip {
+            position: relative;
+        }
+
+        .sidebar.collapsed .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            left: 70px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #333;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .sidebar.collapsed .tooltip:hover::after {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filter-group {
+                flex-direction: column;
+            }
+            
+            .filter-input, .filter-select {
+                min-width: 100%;
+            }
+            
+            .staff-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+   

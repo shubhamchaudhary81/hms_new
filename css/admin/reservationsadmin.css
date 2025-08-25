@@ -1,0 +1,425 @@
+
+        
+        .main-content {
+            margin-left: 280px;
+            padding: 30px;
+            transition: margin-left 0.3s ease;
+            min-height: 100vh;
+        }
+
+        .sidebar.collapsed + .main-content {
+            margin-left: 80px;
+        }
+
+        .content-header {
+            background: white;
+           padding: 5px 10px;
+            border-radius: 15px;
+            box-shadow: 0 2px 20px rgba(139, 115, 85, 0.08);
+            margin-top: -23px;
+            margin-bottom: 30px;
+            border: 1px solid #f0ebe4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .content-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #5a4a3a;
+            margin-bottom: 8px;
+        }
+
+        .content-subtitle {
+            color: #8b7355;
+            font-size: 16px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #8b7355 0%, #a0896b 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(139, 115, 85, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #8b7355;
+            border: 1px solid #8b7355;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #8b7355;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #8b7355;
+            border: 1px solid #e8e2db;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline:hover {
+            border-color: #8b7355;
+            background: #f8f6f3;
+        }
+
+        /* Custom styles for reservation management */
+        .nav-tabs {
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .nav-tabs .nav-link {
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: #6c757d;
+            font-weight: 500;
+            padding: 1rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tabs .nav-link:hover {
+            border-color: transparent;
+            color: #495057;
+            background-color: #f8f9fa;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: #1e3a8a;
+            background-color: transparent;
+            border-bottom: 3px solid #1e3a8a;
+            font-weight: 600;
+        }
+        
+        .nav-tabs .badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+        }
+        
+        .tab-content {
+            padding-top: 1rem;
+        }
+        
+        .table th {
+            background-color: #f8f9fa;
+            border-top: none;
+            font-weight: 600;
+            color: #495057;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .table td {
+            vertical-align: middle;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .status-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .status-pending {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: #856404;
+        }
+        
+        .status-confirmed {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: #155724;
+        }
+        
+        .status-cancelled {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #721c24;
+        }
+        
+        .btn-action {
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-action:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .customer-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        
+        .alert {
+            border-radius: 0.5rem;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+        }
+        
+        .alert-danger {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+        }
+        
+        /* Empty state styling */
+        .text-muted i {
+            opacity: 0.5;
+        }
+        
+                 /* Responsive adjustments */
+         @media (max-width: 768px) {
+             .nav-tabs .nav-link {
+                 padding: 0.75rem 1rem;
+                 font-size: 0.875rem;
+             }
+             
+             .table-responsive {
+                 font-size: 0.875rem;
+             }
+             
+             .btn-action {
+                 width: 28px;
+                 height: 28px;
+                 font-size: 0.75rem;
+             }
+         }
+         
+         /* Enhanced Modal Styles */
+         .bg-gradient-primary {
+             background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+         }
+         
+         .modal-header.bg-gradient-primary {
+             border-bottom: none;
+             padding: 1.5rem;
+         }
+         
+         .modal-header.bg-gradient-primary .modal-title {
+             font-weight: 600;
+             font-size: 1.25rem;
+         }
+         
+         .btn-close-white {
+             filter: brightness(0) invert(1);
+         }
+         
+         .modal-body {
+             padding: 2rem;
+         }
+         
+         .modal-footer {
+             border-top: 1px solid #e9ecef;
+             padding: 1.5rem 2rem;
+         }
+         
+         /* Reservation Summary Styles */
+         .reservation-summary {
+             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+             border-radius: 0.75rem;
+             padding: 1.5rem;
+             border: 1px solid #dee2e6;
+         }
+         
+         .summary-item {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             padding: 0.75rem 0;
+             border-bottom: 1px solid #e9ecef;
+         }
+         
+         .summary-item:last-child {
+             border-bottom: none;
+         }
+         
+         .summary-item .label {
+             font-weight: 600;
+             color: #495057;
+             font-size: 0.875rem;
+         }
+         
+         .summary-item .value {
+             font-weight: 700;
+             color: #1e3a8a;
+             font-size: 0.875rem;
+         }
+         
+         /* Cost Breakdown Styles */
+         .cost-breakdown {
+             background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+             border-radius: 0.75rem;
+             padding: 1.5rem;
+             border: 1px solid #dee2e6;
+         }
+         
+         .breakdown-item {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             padding: 0.5rem 0;
+             font-size: 0.875rem;
+         }
+         
+         .breakdown-item.total {
+             border-top: 2px solid #1e3a8a;
+             margin-top: 0.75rem;
+             padding-top: 1rem;
+             font-weight: 700;
+             font-size: 1rem;
+             color: #1e3a8a;
+         }
+         
+         .breakdown-item .label {
+             color: #6c757d;
+         }
+         
+         .breakdown-item .value {
+             font-weight: 600;
+             color: #495057;
+         }
+         
+         .breakdown-item.total .value {
+             color: #1e3a8a;
+             font-size: 1.125rem;
+         }
+         
+         /* Advance Payment Section */
+         .advance-payment-section {
+             background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+             border-radius: 0.75rem;
+             padding: 1.5rem;
+             border: 1px solid #dee2e6;
+         }
+         
+         .form-control-lg {
+             height: 3rem;
+             font-size: 1.125rem;
+             font-weight: 600;
+         }
+         
+         .input-group-text {
+             background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+             color: white;
+             border: none;
+             font-weight: 600;
+         }
+         
+         .form-text {
+             color: #6c757d;
+             font-size: 0.875rem;
+             margin-top: 0.5rem;
+         }
+         
+         /* Payment Summary */
+         .payment-summary {
+             background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+             border-radius: 0.75rem;
+             padding: 1.5rem;
+             border: 1px solid #90caf9;
+             margin-top: 1rem;
+         }
+         
+         .summary-row {
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+             padding: 0.75rem 0;
+             font-size: 0.875rem;
+             border-bottom: 1px solid rgba(144, 202, 249, 0.3);
+         }
+         
+         .summary-row:last-child {
+             border-bottom: none;
+         }
+         
+         .summary-row.remaining {
+             font-weight: 700;
+             font-size: 1rem;
+             color: #1e3a8a;
+             border-top: 2px solid #1e3a8a;
+             margin-top: 0.75rem;
+             padding-top: 1rem;
+         }
+         
+         /* Button Enhancements */
+         .btn-lg {
+             padding: 0.875rem 2rem;
+             font-size: 1rem;
+             font-weight: 600;
+             border-radius: 0.5rem;
+         }
+         
+         .btn-success {
+             background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+             border: none;
+             box-shadow: 0 4px 6px rgba(40, 167, 69, 0.2);
+         }
+         
+         .btn-success:hover {
+             background: linear-gradient(135deg, #218838 0%, #1ea085 100%);
+             transform: translateY(-1px);
+             box-shadow: 0 6px 8px rgba(40, 167, 69, 0.3);
+         }
+         
+         .btn-secondary {
+             background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+             border: none;
+             box-shadow: 0 4px 6px rgba(108, 117, 125, 0.2);
+         }
+         
+         .btn-secondary:hover {
+             background: linear-gradient(135deg, #5a6268 0%, #343a40 100%);
+             transform: translateY(-1px);
+             box-shadow: 0 6px 8px rgba(108, 117, 125, 0.3);
+         }
