@@ -60,6 +60,21 @@ if ($conn->connect_error) {
 // } else {
 //     // Error creating users table
 // }
+$create_gallery_table="CREATE TABLE IF NOT EXISTS gallery (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    category VARCHAR(50) NOT NULL,
+    image_path VARCHAR(255) NOT NULL,
+    alt_text VARCHAR(255) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_deleted TINYINT(1) DEFAULT 0
+)";
+// $gallery_table="ALTER TABLE gallery ADD COLUMN is_deleted TINYINT(1) DEFAULT 0";
+
+if ($conn->query($create_gallery_table) === TRUE) {
+    // echo "Table 'roomtype' created successfully<br>";
+} else {
+    // echo "Error creating 'roomtype' table: " . $conn->error . "<br>";
+}
 
 // Create room type table if it doesn't exist
 $create_room_type_table = "CREATE TABLE IF NOT EXISTS RoomType (

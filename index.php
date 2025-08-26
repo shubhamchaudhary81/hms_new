@@ -1,19 +1,55 @@
 <?php
-    include 'config/configdatabse.php';
-    
+session_start();
+include 'config/configdatabse.php';
+// Fetch all images
+$result = $conn->query("SELECT * FROM gallery WHERE is_deleted = 0 ORDER BY created_at DESC LIMIT 3");
+
+if (!$result) {
+  die("Query Failed: " . $conn->error);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Himalaya Hotel </title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
   <link rel="stylesheet" href="css/mainindex.css">
+
 </head>
+
 <body>
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+            border-radius: 10px;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+    </style>
+
   <!-- Premium Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container">
@@ -39,7 +75,8 @@
   <section class="hero-section">
     <div class="container text-center">
       <h1 class="hero-title">Experience Himalayan Luxury</h1>
-      <p class="hero-subtitle">Discover unmatched comfort, thoughtful service, and true relaxation at our premier luxury hotel—your perfect getaway starts here</p>
+      <p class="hero-subtitle">Discover unmatched comfort, thoughtful service, and true relaxation at our premier luxury
+        hotel—your perfect getaway starts here</p>
       <a href="rooms.php" class="btn btn-premium btn-lg">Explore Our Rooms</a>
     </div>
   </section>
@@ -91,14 +128,18 @@
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center mb-5">
           <h2 class="section-title">Welcome to Himalaya Hotel</h2>
-          <p class="lead">Nestled in the heart of the mountains, Himalaya Hotel offers a perfect blend of traditional hospitality and modern luxury. Our commitment to excellence ensures every guest experiences the warmth of our service and the comfort of our accommodations.</p>
+          <p class="lead">Nestled in the heart of the mountains, Himalaya Hotel offers a perfect blend of traditional
+            hospitality and modern luxury. Our commitment to excellence ensures every guest experiences the warmth of
+            our service and the comfort of our accommodations.</p>
         </div>
       </div>
-      
+
       <div class="row g-4">
         <div class="col-md-4">
           <div class="room-card">
-            <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="room-img" alt="Suite Room">
+            <img
+              src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+              class="room-img" alt="Suite Room">
             <div class="room-body">
               <h3 class="room-title">Luxury Suite</h3>
               <p>Spacious suite with panoramic mountain views, premium amenities, and exclusive services.</p>
@@ -108,7 +149,9 @@
         </div>
         <div class="col-md-4">
           <div class="room-card">
-            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="room-img" alt="Deluxe Room">
+            <img
+              src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+              class="room-img" alt="Deluxe Room">
             <div class="room-body">
               <h3 class="room-title">Deluxe Room</h3>
               <p>Elegant room with modern comforts, perfect for both business and leisure travelers.</p>
@@ -127,7 +170,7 @@
           </div>
         </div>
       </div>
-      
+
       <div class="text-center mt-4">
         <a href="#rooms" class="btn btn-premium">View All Rooms</a>
       </div>
@@ -143,7 +186,7 @@
           <p class="lead text-white-50">We go above and beyond to ensure your stay is nothing short of perfect.</p>
         </div>
       </div>
-      
+
       <div class="row g-4">
         <div class="col-md-3">
           <div class="why-card text-center">
@@ -185,7 +228,56 @@
     </div>
   </section>
 
-  
+  <!-- Gallery Section -->
+  <section id="gallery" class="py-5 bg-light">
+    <div class="container">
+      <!-- Section Header -->
+      <div class="row justify-content-center mb-5">
+        <div class="col-lg-8 text-center">
+          <h2 class="section-title">Photo Gallery</h2>
+          <p class="lead text-muted">
+            Explore our collection of luxurious rooms, dining experiences, and wellness facilities.
+          </p>
+        </div>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="text-center mb-4">
+        <button class="btn btn-premium me-2 filter-btn active" data-filter="all">All</button>
+        <button class="btn btn-premium me-2 filter-btn" data-filter="rooms">Rooms</button>
+        <button class="btn btn-premium  me-2 filter-btn" data-filter="dining">Dining</button>
+        <button class="btn btn-premium  me-2 filter-btn" data-filter="hall">Event Halls</button>
+        <button class="btn btn-premium me-2 filter-btn" data-filter="wellness">Wellness</button>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="row g-4">
+
+        <!-- Full Gallery -->
+        <div class="container">
+          <div class="row g-4 mt-5">
+            <?php while ($row = $result->fetch_assoc()): ?>
+              <div class="col-md-4 gallery-item" data-category="<?= htmlspecialchars($row['category']); ?>">
+                <img src="<?= htmlspecialchars($row['image_path']); ?>" alt="<?= htmlspecialchars($row['alt_text']); ?>">
+
+                <!-- Soft Delete Button -->
+                <!-- <form action="remove_image.php" method="post" class="mt-2">
+                  <input type="hidden" name="id" value="<?= $row['id']; ?>">
+                  <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                </form> -->
+              </div>
+            <?php endwhile; ?>
+
+            <!-- View More Button -->
+            <div class="text-center mt-4">
+              <a href="gallery.php" class="btn btn-premium px-4 py-2 rounded-pill">
+                View More Photos
+              </a>
+            </div>
+
+          </div>
+  </section>
+
 
   <!-- Premium Footer -->
   <footer class="footer">
@@ -193,7 +285,8 @@
       <div class="row g-4">
         <div class="col-lg-4">
           <h3 class="footer-title">Himalaya Hotel</h3>
-          <p>Experience the pinnacle of luxury hospitality in the heart of the mountains. Our commitment to excellence ensures memorable stays for all our guests.</p>
+          <p>Experience the pinnacle of luxury hospitality in the heart of the mountains. Our commitment to excellence
+            ensures memorable stays for all our guests.</p>
           <div class="mt-3">
             <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
             <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
@@ -235,5 +328,30 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const filterButtons = document.querySelectorAll('[data-filter]');
+    const galleryItems = document.querySelectorAll('.gallery-item');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+
+        // Active button styling
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Filter logic
+        galleryItems.forEach(item => {
+          if (filter === 'all' || item.getAttribute('data-category') === filter) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+
 </body>
+
 </html>
