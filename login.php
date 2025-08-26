@@ -107,8 +107,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/login.css">
   <link rel="stylesheet" href="css/mainindex.css">
+  <link rel="stylesheet" href="css/login.css">
+  
+
 </head>
 
  <body>
