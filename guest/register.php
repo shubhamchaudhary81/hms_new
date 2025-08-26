@@ -174,13 +174,13 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
 } // <-- This closes the if ($_SERVER["REQUEST_METHOD"] == 'POST') { block
 
 // Show errors above the form
-// if (!empty($errors)) {
-//     echo '<div class="alert alert-danger">';
-//     foreach ($errors as $err) {
-//         echo '<div>' . htmlspecialchars($err) . '</div>';
-//     }
-//     echo '</div>';
-// }
+if (!empty($errors)) {
+    echo '<div class="alert alert-danger">';
+    foreach ($errors as $err) {
+        echo '<div>' . htmlspecialchars($err) . '</div>';
+    }
+    echo '</div>';
+}
 
 ?>
 <!DOCTYPE html>
@@ -233,11 +233,6 @@ if ($_SERVER["REQUEST_METHOD"] == 'POST') {
                 <p class="register-subtitle">Join Himalaya Hotel for exclusive benefits and personalized service. Please
                     fill out all required fields.</p>
             </div>
-
-            <div class="register-body">
-                <?php if (!empty($errors)): ?>
-                    <div class="alert alert-danger"><?php echo htmlspecialchars($err); ?></div>
-                <?php endif; ?>
 
                 <form action="" method="POST" enctype="multipart/form-data" autocomplete="off" id="registrationForm">
                     <!-- Personal Information Section -->
