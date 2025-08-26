@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $_SESSION['admin_id'] = $row['user_id'];
                 $_SESSION['admin_name'] = $row['name'];
                 $_SESSION['admin_email'] = $row['email'];
-                header("Location: admin/admindash.php");
+                header("Location: admin/dashboard.php");
                 exit();
             } else {
                 $error = "Invalid email or password.";
