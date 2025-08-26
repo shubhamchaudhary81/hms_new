@@ -110,7 +110,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
 
         <!-- Room Table -->
         <div class="table-container">
-            <div class="table-header">
+            <!-- <div class="table-header">
                 <h5 class="table-title"><i class="fas fa-list me-2"></i>Room Inventory</h5>
                 <div class="filter-indicator" id="filterIndicator" style="display: none;">
                     <span class="filter-text">Showing: <span id="currentFilter">All Rooms</span></span>
@@ -118,7 +118,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
                         <i class="fas fa-times"></i> Clear Filter
                     </button>
                 </div>
-            </div>
+            </div> -->
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
                     <thead>

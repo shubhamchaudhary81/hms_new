@@ -660,8 +660,8 @@ while ($row = $result->fetch_assoc()) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php#services">Services</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                     <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
                     <li class="nav-item"><a class="nav-link" href="rooms.php">Rooms</a></li>

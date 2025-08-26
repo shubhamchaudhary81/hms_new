@@ -19,10 +19,12 @@ SELECT
     r.reservation_id, r.requested_check_in_date AS check_in, r.requested_check_out_date AS check_out, 
     r.num_guests, r.status, 
     c.first_name, c.last_name, c.number, c.email,
-    rt.room_type_name
+    rt.room_type_name,
+    rm.room_number, rm.price_per_night
 FROM Reservations r
 JOIN Customers c ON r.customer_id = c.id
 JOIN RoomType rt ON r.room_type_id = rt.room_type_id
+LEFT JOIN Room rm ON rm.room_type = rt.room_type_id
 WHERE r.status = 'pending'
 ORDER BY r.requested_check_in_date ASC
 ";

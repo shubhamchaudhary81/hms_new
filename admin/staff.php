@@ -51,6 +51,7 @@ $showButton = true;
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            overflow-y: scroll;
         }
         
         .main-content {
@@ -66,7 +67,7 @@ $showButton = true;
 
         .content-header {
             background: white;
-           padding: 5px 10px;
+           padding: 0px 10px;
             border-radius: 15px;
             box-shadow: 0 2px 20px rgba(139, 115, 85, 0.08);
             margin-top: -23px;
