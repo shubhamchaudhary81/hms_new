@@ -46,7 +46,7 @@ if (!$result) {
 $rooms = [];
 while ($row = $result->fetch_assoc()) {
     $room_id = $row['room_id'];
-    
+
     // Get review count and average rating
     $review_sql = "SELECT COUNT(*) as review_count, AVG(rating) as avg_rating FROM reviews WHERE room_id = $room_id";
     $review_res = $conn->query($review_sql);
@@ -73,16 +73,22 @@ while ($row = $result->fetch_assoc()) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Luxury Rooms & Suites | Himalaya Hotel</title>
+    <title>Himalaya Hotel </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/mainindex.css">
+
     <style>
         :root {
-            --primary-color: #1e3a8a;
+            --primary-color: #8b7355;
             --secondary-color: #f59e0b;
             --accent-color: #10b981;
             --text-dark: #1f2937;
@@ -94,16 +100,87 @@ while ($row = $result->fetch_assoc()) {
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: var(--bg-light); 
-            color: var(--text-dark);
-            line-height: 1.6;
+        body {
+            font-family: 'Montserrat', sans-serif;
+      color: var(--dark);
+      background-color: #fff;
+        }
+
+
+        /* Premium Navigation */
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: var(--primary) !important;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark);
+            margin: 0 10px;
+            position: relative;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover:after,
+        .nav-link.active:after {
+            width: 100%;
+        }
+
+        .btn-premium {
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 167, 98, 0.3);
+        }
+
+        .btn-premium:hover {
+            background: #c29555;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 167, 98, 0.4);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
         .hero-rooms {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
+            background: #8b7355;
             padding: 4rem 0 3rem 0;
+            margin-top: 4rem;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -116,7 +193,6 @@ while ($row = $result->fetch_assoc()) {
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
         }
 
         .hero-rooms .container {
@@ -124,17 +200,17 @@ while ($row = $result->fetch_assoc()) {
             z-index: 2;
         }
 
-        .hero-rooms h1 { 
-            font-size: 3.5rem; 
-            font-weight: 700; 
-            color: white; 
+        .hero-rooms h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
             margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .hero-rooms p { 
-            color: rgba(255,255,255,0.9); 
-            font-size: 1.25rem; 
+        .hero-rooms p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.25rem;
             margin-bottom: 0;
             font-weight: 400;
         }
@@ -151,8 +227,8 @@ while ($row = $result->fetch_assoc()) {
             border: 1px solid var(--border-color);
         }
 
-        .search-bar .form-label { 
-            font-weight: 600; 
+        .search-bar .form-label {
+            font-weight: 600;
             color: var(--text-dark);
             font-size: 0.875rem;
             text-transform: uppercase;
@@ -175,7 +251,8 @@ while ($row = $result->fetch_assoc()) {
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color) 0%, #3730a3 100%);
+            /* background: linear-gradient(135deg, var(--primary-color) 0%, #3730a3 100%); */
+            background: var(--primary-color);
             border: none;
             border-radius: 0.75rem;
             padding: 0.75rem 1.5rem;
@@ -186,63 +263,64 @@ while ($row = $result->fetch_assoc()) {
         .btn-primary:hover {
             transform: translateY(-1px);
             box-shadow: var(--shadow-lg);
+            background-color: #8b7355;
         }
 
         .room-listing {
-            margin-top: 2rem;
+            margin-top: 1rem;
         }
 
-                 .room-card {
-             background: white;
-             border-radius: 1rem;
-             box-shadow: var(--shadow-sm);
-             margin-bottom: 1rem;
-             transition: all 0.3s ease;
-             border: 1px solid var(--border-color);
-             position: relative;
-             display: flex;
-             overflow: hidden;
-         }
+        .room-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            position: relative;
+            display: flex;
+            overflow: hidden;
+        }
 
-         .room-card:hover {
-             transform: translateY(-2px);
-             box-shadow: var(--shadow-md);
-             border-color: var(--primary-color);
-         }
+        .room-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+        }
 
-         .room-image-container {
-             position: relative;
-             overflow: hidden;
-             background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-             min-width: 200px;
-             max-width: 200px;
-             height: 150px;
-             display: flex;
-             align-items: center;
-             justify-content: center;
-             flex-shrink: 0;
-         }
+        .room-image-container {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            min-width: 200px;
+            max-width: 200px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
 
-         .room-img {
-             width: 100%;
-             height: 100%;
-             object-fit: cover;
-             transition: transform 0.3s ease;
-             background: #f3f4f6;
-         }
+        .room-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            background: #f3f4f6;
+        }
 
-         .image-loading {
-             position: absolute;
-             top: 50%;
-             left: 50%;
-             transform: translate(-50%, -50%);
-             color: #9ca3af;
-             font-size: 1.2rem;
-         }
+        .image-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #9ca3af;
+            font-size: 1.2rem;
+        }
 
-         .room-card:hover .room-img {
-             transform: scale(1.05);
-         }
+        .room-card:hover .room-img {
+            transform: scale(1.05);
+        }
 
         .room-badge {
             position: absolute;
@@ -257,213 +335,214 @@ while ($row = $result->fetch_assoc()) {
             backdrop-filter: blur(10px);
         }
 
-                 .room-body {
-             padding: 1.25rem;
-             flex: 1;
-             display: flex;
-             flex-direction: column;
-         }
+        .room-body {
+            padding: 1.25rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
 
-         .room-header {
-             display: flex;
-             justify-content: space-between;
-             align-items: flex-start;
-             margin-bottom: 0.75rem;
-         }
+        .room-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
 
-         .room-title {
-             font-size: 1.25rem;
-             font-weight: 700;
-             color: var(--text-dark);
-             margin-bottom: 0.25rem;
-         }
+        .room-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.25rem;
+        }
 
-         .room-number {
-             color: var(--text-light);
-             font-size: 0.875rem;
-             font-weight: 500;
-         }
+        .room-number {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
 
-         .room-rating {
-             background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-             color: white;
-             padding: 0.375rem 0.75rem;
-             border-radius: 0.5rem;
-             font-weight: 600;
-             font-size: 0.75rem;
-             display: flex;
-             align-items: center;
-             gap: 0.25rem;
-         }
+        .room-rating {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+            padding: 0.375rem 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
 
-         .room-description {
-             color: var(--text-light);
-             font-size: 0.875rem;
-             margin-bottom: 1rem;
-             line-height: 1.5;
-             display: -webkit-box;
-             -webkit-line-clamp: 2;
-             -webkit-box-orient: vertical;
-             overflow: hidden;
-         }
+        .room-description {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
 
-         .room-details {
-             display: flex;
-             gap: 1.5rem;
-             margin-bottom: 1rem;
-             padding: 0.75rem;
-             background: var(--bg-light);
-             border-radius: 0.5rem;
-             flex-wrap: wrap;
-         }
+        .room-details {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-light);
+            border-radius: 0.5rem;
+            flex-wrap: wrap;
+        }
 
-         .detail-item {
-             display: flex;
-             align-items: center;
-             gap: 0.5rem;
-         }
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-         .detail-icon {
-             font-size: 1rem;
-             color: var(--primary-color);
-         }
+        .detail-icon {
+            font-size: 1rem;
+            color: var(--primary-color);
+        }
 
-         .detail-label {
-             font-size: 0.75rem;
-             color: var(--text-light);
-             text-transform: uppercase;
-             letter-spacing: 0.05em;
-             font-weight: 600;
-         }
+        .detail-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
 
-         .detail-value {
-             font-size: 0.875rem;
-             font-weight: 600;
-             color: var(--text-dark);
-         }
+        .detail-value {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
 
-         .room-amenities {
-             margin-bottom: 1rem;
-         }
+        .room-amenities {
+            margin-bottom: 1rem;
+        }
 
-         .amenities-title {
-             font-size: 0.75rem;
-             font-weight: 600;
-             color: var(--text-dark);
-             margin-bottom: 0.5rem;
-             text-transform: uppercase;
-             letter-spacing: 0.05em;
-         }
+        .amenities-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
 
-         .amenities-list {
-             display: flex;
-             flex-wrap: wrap;
-             gap: 0.375rem;
-         }
+        .amenities-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.375rem;
+        }
 
-         .amenity-badge {
-             background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
-             color: var(--primary-color);
-             padding: 0.25rem 0.5rem;
-             border-radius: 0.375rem;
-             font-size: 0.75rem;
-             font-weight: 500;
-             display: flex;
-             align-items: center;
-             gap: 0.25rem;
-         }
+        .amenity-badge {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+            color: var(--primary-color);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
 
-         .room-footer {
-             display: flex;
-             justify-content: space-between;
-             align-items: center;
-             margin-top: auto;
-             padding-top: 0.75rem;
-             border-top: 1px solid var(--border-color);
-         }
+        .room-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border-color);
+        }
 
-         .room-price {
-             display: flex;
-             flex-direction: column;
-         }
+        .room-price {
+            display: flex;
+            flex-direction: column;
+        }
 
-         .price-amount {
-             font-size: 1.5rem;
-             font-weight: 700;
-             color: var(--accent-color);
-         }
+        .price-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
 
-         .price-period {
-             font-size: 0.75rem;
-             color: var(--text-light);
-             font-weight: 500;
-         }
+        .price-period {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
 
-         .room-actions {
-             display: flex;
-             gap: 0.5rem;
-         }
+        .room-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
 
-                 .btn-view {
-             background: linear-gradient(135deg, var(--primary-color) 0%, #3730a3 100%);
-             color: white;
-             border: none;
-             border-radius: 0.5rem;
-             padding: 0.5rem 1rem;
-             font-weight: 600;
-             font-size: 0.75rem;
-             transition: all 0.2s ease;
-             text-decoration: none;
-             display: inline-flex;
-             align-items: center;
-             gap: 0.375rem;
-         }
+        .btn-view {
+            /* background: linear-gradient(135deg, var(--primary-color) 0%, #3730a3 100%); */
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
 
-         .btn-view:hover {
-             color: white;
-             transform: translateY(-1px);
-             box-shadow: var(--shadow-md);
-         }
+        .btn-view:hover {
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
 
-         .btn-book {
-             background: linear-gradient(135deg, var(--accent-color) 0%, #059669 100%);
-             color: white;
-             border: none;
-             border-radius: 0.5rem;
-             padding: 0.5rem 1rem;
-             font-weight: 600;
-             font-size: 0.75rem;
-             transition: all 0.2s ease;
-             text-decoration: none;
-             display: inline-flex;
-             align-items: center;
-             gap: 0.375rem;
-         }
+        .btn-book {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-weight: 600;
+            font-size: 0.75rem;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
 
-         .btn-book:hover {
-             color: white;
-             transform: translateY(-1px);
-             box-shadow: var(--shadow-md);
-         }
+        .btn-book:hover {
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
 
-         .btn-wishlist {
-             background: white;
-             color: var(--text-light);
-             border: 2px solid var(--border-color);
-             border-radius: 0.5rem;
-             padding: 0.5rem;
-             font-size: 0.875rem;
-             transition: all 0.2s ease;
-             display: inline-flex;
-             align-items: center;
-             justify-content: center;
-         }
+        .btn-wishlist {
+            background: white;
+            color: var(--text-light);
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-         .btn-wishlist:hover {
-             color: #ef4444;
-             border-color: #ef4444;
-             transform: translateY(-1px);
-         }
+        .btn-wishlist:hover {
+            color: #ef4444;
+            border-color: #ef4444;
+            transform: translateY(-1px);
+        }
 
         .stats-section {
             background: white;
@@ -514,25 +593,83 @@ while ($row = $result->fetch_assoc()) {
             margin-bottom: 1rem;
         }
 
-                 @media (max-width: 991px) {
-             .hero-rooms h1 { font-size: 2.5rem; }
-             .room-image-container { min-width: 180px; max-width: 180px; height: 130px; }
-             .search-bar { margin: -1rem 1rem 2rem 1rem; }
-         }
+        @media (max-width: 991px) {
+            .hero-rooms h1 {
+                font-size: 2.5rem;
+            }
 
-         @media (max-width: 767px) {
-             .hero-rooms h1 { font-size: 2rem; }
-             .hero-rooms p { font-size: 1rem; }
-             .search-bar { padding: 1.5rem; }
-             .room-card { flex-direction: column; }
-             .room-image-container { min-width: 100%; max-width: 100%; height: 200px; }
-             .room-footer { flex-direction: column; gap: 0.75rem; align-items: stretch; }
-             .room-actions { justify-content: center; }
-             .room-details { flex-direction: column; gap: 0.75rem; }
-         }
+            .room-image-container {
+                min-width: 180px;
+                max-width: 180px;
+                height: 130px;
+            }
+
+            .search-bar {
+                margin: -1rem 1rem 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .hero-rooms h1 {
+                font-size: 2rem;
+            }
+
+            .hero-rooms p {
+                font-size: 1rem;
+            }
+
+            .search-bar {
+                padding: 1.5rem;
+            }
+
+            .room-card {
+                flex-direction: column;
+            }
+
+            .room-image-container {
+                min-width: 100%;
+                max-width: 100%;
+                height: 200px;
+            }
+
+            .room-footer {
+                flex-direction: column;
+                gap: 0.75rem;
+                align-items: stretch;
+            }
+
+            .room-actions {
+                justify-content: center;
+            }
+
+            .room-details {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+        }
     </style>
 </head>
+
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.php">Himalaya Hotel</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="rooms.php">Rooms</a></li>
+                    <li class="nav-item ms-3"><a href="login.php" class="btn btn-premium">Login / Sign Up</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
     <!-- Hero Section -->
     <section class="hero-rooms">
         <div class="container">
@@ -547,27 +684,25 @@ while ($row = $result->fetch_assoc()) {
             <form class="row g-3 align-items-end" method="get">
                 <div class="col-lg-3 col-md-6">
                     <label for="search" class="form-label">Search Rooms</label>
-                    <input type="text" class="form-control" id="search" name="search" 
-                           placeholder="Room type, number, or description"
-                           value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
+                    <input type="text" class="form-control" id="search" name="search"
+                        placeholder="Room type, number, or description"
+                        value="<?= isset($_GET['search']) ? htmlspecialchars($_GET['search']) : '' ?>">
                 </div>
                 <div class="col-lg-2 col-md-6">
                     <label for="min_price" class="form-label">Min Price</label>
-                    <input type="number" class="form-control" id="min_price" name="min_price" 
-                           min="0" placeholder="₹0"
-                           value="<?= isset($_GET['min_price']) ? htmlspecialchars($_GET['min_price']) : '' ?>">
+                    <input type="number" class="form-control" id="min_price" name="min_price" min="0" placeholder="₹0"
+                        value="<?= isset($_GET['min_price']) ? htmlspecialchars($_GET['min_price']) : '' ?>">
                 </div>
                 <div class="col-lg-2 col-md-6">
                     <label for="max_price" class="form-label">Max Price</label>
-                    <input type="number" class="form-control" id="max_price" name="max_price" 
-                           min="0" placeholder="₹50000"
-                           value="<?= isset($_GET['max_price']) ? htmlspecialchars($_GET['max_price']) : '' ?>">
+                    <input type="number" class="form-control" id="max_price" name="max_price" min="0"
+                        placeholder="₹50000"
+                        value="<?= isset($_GET['max_price']) ? htmlspecialchars($_GET['max_price']) : '' ?>">
                 </div>
                 <div class="col-lg-2 col-md-6">
                     <label for="capacity" class="form-label">Capacity</label>
-                    <input type="number" class="form-control" id="capacity" name="capacity" 
-                           min="1" placeholder="Guests"
-                           value="<?= isset($_GET['capacity']) ? htmlspecialchars($_GET['capacity']) : '' ?>">
+                    <input type="number" class="form-control" id="capacity" name="capacity" min="1" placeholder="Guests"
+                        value="<?= isset($_GET['capacity']) ? htmlspecialchars($_GET['capacity']) : '' ?>">
                 </div>
                 <div class="col-lg-2 col-md-6">
                     <label for="floor" class="form-label">Floor</label>
@@ -625,29 +760,29 @@ while ($row = $result->fetch_assoc()) {
                     </div>
                 </div>
             <?php endif; ?>
-            
-                         <?php foreach ($rooms as $room): ?>
-                 <div class="col-12">
-                     <div class="room-card">
+
+            <?php foreach ($rooms as $room): ?>
+                <div class="col-12">
+                    <div class="room-card">
                         <div class="room-image-container">
                             <div class="image-loading">
                                 <i class="bi bi-image"></i>
                             </div>
                             <?php
                             $imageFile = $room['image'] ?? '';
-                            
+
                             // Check if image exists in room_images folder
                             if (!empty($imageFile)) {
                                 $roomImagePath = 'uploads/room_images/' . $imageFile;
                                 $fullImagePath = __DIR__ . '/uploads/room_images/' . $imageFile;
-                                
+
                                 if (file_exists($fullImagePath)) {
                                     $imgSrc = $roomImagePath;
                                 } else {
                                     // Fallback to assets/images
                                     $assetsImagePath = 'assets/images/' . $imageFile;
                                     $fullAssetsPath = __DIR__ . '/assets/images/' . $imageFile;
-                                    
+
                                     if (file_exists($fullAssetsPath)) {
                                         $imgSrc = $assetsImagePath;
                                     } else {
@@ -678,9 +813,9 @@ while ($row = $result->fetch_assoc()) {
                                 }
                             }
                             ?>
-                            <img src="<?= htmlspecialchars($imgSrc) ?>" class="room-img" 
-                                 alt="<?= htmlspecialchars($room['room_type_name']) ?> Room"
-                                 onerror="this.src='assets/images/hotel.jpg'">
+                            <img src="<?= htmlspecialchars($imgSrc) ?>" class="room-img"
+                                alt="<?= htmlspecialchars($room['room_type_name']) ?> Room"
+                                onerror="this.src='assets/images/hotel.jpg'">
                             <div class="room-badge">
                                 <i class="bi bi-check-circle-fill me-1"></i>Available
                             </div>
@@ -702,28 +837,28 @@ while ($row = $result->fetch_assoc()) {
                                 <?= htmlspecialchars($room['description'] ?? $room['type_description'] ?? 'Luxurious accommodation with modern amenities and stunning views.') ?>
                             </div>
 
-                                                         <div class="room-details">
-                                 <div class="detail-item">
-                                     <i class="bi bi-people-fill detail-icon"></i>
-                                     <span class="detail-label">Capacity:</span>
-                                     <span class="detail-value"><?= htmlspecialchars($room['capacity']) ?></span>
-                                 </div>
-                                 <div class="detail-item">
-                                     <i class="bi bi-building detail-icon"></i>
-                                     <span class="detail-label">Floor:</span>
-                                     <span class="detail-value"><?= htmlspecialchars($room['floor_number']) ?></span>
-                                 </div>
-                                 <div class="detail-item">
-                                     <i class="bi bi-arrows-angle-expand detail-icon"></i>
-                                     <span class="detail-label">Size:</span>
-                                     <span class="detail-value"><?= htmlspecialchars($room['size'] ?? 'N/A') ?></span>
-                                 </div>
-                                 <div class="detail-item">
-                                     <i class="bi bi-eye detail-icon"></i>
-                                     <span class="detail-label">View:</span>
-                                     <span class="detail-value"><?= htmlspecialchars($room['view_type'] ?? 'City') ?></span>
-                                 </div>
-                             </div>
+                            <div class="room-details">
+                                <div class="detail-item">
+                                    <i class="bi bi-people-fill detail-icon"></i>
+                                    <span class="detail-label">Capacity:</span>
+                                    <span class="detail-value"><?= htmlspecialchars($room['capacity']) ?></span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="bi bi-building detail-icon"></i>
+                                    <span class="detail-label">Floor:</span>
+                                    <span class="detail-value"><?= htmlspecialchars($room['floor_number']) ?></span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="bi bi-arrows-angle-expand detail-icon"></i>
+                                    <span class="detail-label">Size:</span>
+                                    <span class="detail-value"><?= htmlspecialchars($room['size'] ?? 'N/A') ?></span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="bi bi-eye detail-icon"></i>
+                                    <span class="detail-label">View:</span>
+                                    <span class="detail-value"><?= htmlspecialchars($room['view_type'] ?? 'City') ?></span>
+                                </div>
+                            </div>
 
                             <?php if (!empty($room['amenities'])): ?>
                                 <div class="room-amenities">
@@ -750,8 +885,8 @@ while ($row = $result->fetch_assoc()) {
                                     <div class="price-period">per night</div>
                                 </div>
                                 <div class="room-actions">
-                                    <button class="btn-wishlist" onclick="toggleWishlist(<?= $room['room_id'] ?>)" 
-                                            title="Add to Wishlist">
+                                    <button class="btn-wishlist" onclick="toggleWishlist(<?= $room['room_id'] ?>)"
+                                        title="Add to Wishlist">
                                         <i class="bi bi-heart"></i>
                                     </button>
                                     <a href="guest/room_details.php?id=<?= $room['room_id'] ?>" class="btn-view">
@@ -775,7 +910,7 @@ while ($row = $result->fetch_assoc()) {
         function toggleWishlist(roomId) {
             const button = event.target.closest('.btn-wishlist');
             const icon = button.querySelector('i');
-            
+
             if (icon.classList.contains('bi-heart')) {
                 icon.classList.remove('bi-heart');
                 icon.classList.add('bi-heart-fill');
@@ -800,9 +935,9 @@ while ($row = $result->fetch_assoc()) {
                 ${message}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             `;
-            
+
             document.body.appendChild(notification);
-            
+
             setTimeout(() => {
                 if (notification.parentNode) {
                     notification.remove();
@@ -811,54 +946,55 @@ while ($row = $result->fetch_assoc()) {
         }
 
         // Smooth scroll for search form
-        document.querySelector('form').addEventListener('submit', function(e) {
+        document.querySelector('form').addEventListener('submit', function (e) {
             const searchBar = document.querySelector('.search-bar');
             if (searchBar) {
                 searchBar.scrollIntoView({ behavior: 'smooth' });
             }
         });
 
-                 // Add loading animation for images
-         document.addEventListener('DOMContentLoaded', function() {
-             const images = document.querySelectorAll('.room-img');
-             images.forEach(img => {
-                 // Set initial opacity to 0
-                 img.style.opacity = '0';
-                 img.style.transition = 'opacity 0.3s ease';
-                 
-                 // Handle successful load
-                 img.addEventListener('load', function() {
-                     this.style.opacity = '1';
-                     // Hide loading placeholder
-                     const loadingPlaceholder = this.parentElement.querySelector('.image-loading');
-                     if (loadingPlaceholder) {
-                         loadingPlaceholder.style.display = 'none';
-                     }
-                 });
-                 
-                 // Handle error - set fallback image
-                 img.addEventListener('error', function() {
-                     console.log('Image failed to load:', this.src);
-                     this.src = 'assets/images/hotel.jpg';
-                     this.style.opacity = '1';
-                     // Hide loading placeholder
-                     const loadingPlaceholder = this.parentElement.querySelector('.image-loading');
-                     if (loadingPlaceholder) {
-                         loadingPlaceholder.style.display = 'none';
-                     }
-                 });
-                 
-                 // If image is already loaded (cached), show it immediately
-                 if (img.complete) {
-                     img.style.opacity = '1';
-                     // Hide loading placeholder
-                     const loadingPlaceholder = img.parentElement.querySelector('.image-loading');
-                     if (loadingPlaceholder) {
-                         loadingPlaceholder.style.display = 'none';
-                     }
-                 }
-             });
-         });
+        // Add loading animation for images
+        document.addEventListener('DOMContentLoaded', function () {
+            const images = document.querySelectorAll('.room-img');
+            images.forEach(img => {
+                // Set initial opacity to 0
+                img.style.opacity = '0';
+                img.style.transition = 'opacity 0.3s ease';
+
+                // Handle successful load
+                img.addEventListener('load', function () {
+                    this.style.opacity = '1';
+                    // Hide loading placeholder
+                    const loadingPlaceholder = this.parentElement.querySelector('.image-loading');
+                    if (loadingPlaceholder) {
+                        loadingPlaceholder.style.display = 'none';
+                    }
+                });
+
+                // Handle error - set fallback image
+                img.addEventListener('error', function () {
+                    console.log('Image failed to load:', this.src);
+                    this.src = 'assets/images/hotel.jpg';
+                    this.style.opacity = '1';
+                    // Hide loading placeholder
+                    const loadingPlaceholder = this.parentElement.querySelector('.image-loading');
+                    if (loadingPlaceholder) {
+                        loadingPlaceholder.style.display = 'none';
+                    }
+                });
+
+                // If image is already loaded (cached), show it immediately
+                if (img.complete) {
+                    img.style.opacity = '1';
+                    // Hide loading placeholder
+                    const loadingPlaceholder = img.parentElement.querySelector('.image-loading');
+                    if (loadingPlaceholder) {
+                        loadingPlaceholder.style.display = 'none';
+                    }
+                }
+            });
+        });
     </script>
 </body>
+
 </html>

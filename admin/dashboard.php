@@ -1,6 +1,9 @@
 <?php
+session_start();
+include 'admin-auth.php';
 // Database connection
 include_once '../config/configdatabse.php';
+
 
 // Get dashboard statistics
 $stats = [];
@@ -53,6 +56,9 @@ if($recentBookingsResult && $recentBookingsResult->num_rows > 0) {
         <div class="content-headeradmin">
             <h1 class="content-title">Dashboard</h1>
             <p class="content-subtitle">Welcome back! Here's what's happening at your hotel today.</p>
+
+    
+
         </div>
 
         <div class="stats-grid">

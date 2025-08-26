@@ -1,4 +1,5 @@
 <?php
+ include '../include/admin/header.php'; 
 $headerTitle = "Room Management";
 $headerSubtitle = "Manage room availability, status, and maintenance schedules.";
 $buttonText = "Add New Room";
@@ -69,7 +70,6 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
 }
 ?>
 
-<?php include '../include/admin/header.php'; ?>
 
 <body>
     <?php include 'sidebar.php'; ?>
@@ -530,7 +530,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             
             xhr.onload = function() {
-                if (xhr.status === 200) {
+                if (xhr.status === 200  ) {
                     try {
                         const response = JSON.parse(xhr.responseText);
                         if (response.success) {

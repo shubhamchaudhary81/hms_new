@@ -251,6 +251,15 @@
       margin-right: 10px;
       transition: all 0.3s ease;
     }
+      .social-icon i {
+        color: white;       /* Set icon color to white */
+        font-size: 20px;    /* Optional: adjust size */
+        transition: color 0.3s; /* Smooth hover effect */
+    }
+
+    .social-icon i:hover {
+        color: #ddd;        /* Optional: slightly change color on hover */
+    }
     
     .social-icon:hover {
       background: var(--accent);

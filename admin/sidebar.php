@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -396,6 +398,12 @@
                 <a href="billing.php" class="nav-link">
                     <i class="nav-icon fas fa-receipt"></i>
                     <span class="nav-text">Billing</span>
+                </a>
+            </li>
+            <li class="nav-item" data-tooltip="Billing">
+                <a href="../guest/logout.php" class="nav-link">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="nav-text">Logout</span>
                 </a>
             </li>
         </ul>

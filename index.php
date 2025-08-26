@@ -11,6 +11,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="css/mainindex.css">
 </head>
 <body>
@@ -25,10 +26,10 @@
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="rooms.php">Rooms</a></li>
           <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="rooms.php">Rooms</a></li>
           <li class="nav-item ms-3"><a href="login.php" class="btn btn-premium">Login / Sign Up</a></li>
         </ul>
       </div>
@@ -101,7 +102,7 @@
             <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="room-img" alt="Suite Room">
             <div class="room-body">
               <h3 class="room-title">Luxury Suite</h3>
-              <p>Spacious suite with panoramic mountain views, premium amenities, and exclusive services.</p>
+              <p>Luxury suite with stunning views, premium amenities, and personalized service.</p>
               <a href="#" class="btn btn-outline-primary">View Details</a>
             </div>
           </div>
@@ -175,7 +176,7 @@
         <div class="col-md-3">
           <div class="why-card text-center">
             <div class="why-icon">
-              <i class="bi bi-spa"></i>
+             <i class="bi bi-bounding-box-circles"></i>
             </div>
             <h4>Luxury Amenities</h4>
             <p>From spa services to guided tours, we have it all.</p>
@@ -186,7 +187,7 @@
   </section>
 
   <!-- Premium Footer -->
-  <footer class="footer">
+  <footer class="footer" id="contact">
     <div class="container">
       <div class="row g-4">
         <div class="col-lg-4">
@@ -215,14 +216,14 @@
           <p><i class="bi bi-telephone me-2"></i> +977 9819096819</p>
           <p><i class="bi bi-envelope me-2"></i> info@himalayahotel.com</p>
         </div>
-        <div class="col-lg-3 col-md-4">
+        <!-- <div class="col-lg-3 col-md-4">
           <h3 class="footer-title">Newsletter</h3>
           <p>Subscribe to receive updates and special offers.</p>
           <div class="input-group mb-3">
             <input type="email" class="form-control" placeholder="Your Email">
             <button class="btn btn-danger" type="button">Subscribe</button>
           </div>
-        </div>
+        </div> -->
       </div>
       <hr class="my-4 bg-light opacity-10">
       <div class="text-center">
