@@ -234,6 +234,8 @@ if (!empty($errors)) {
                     fill out all required fields.</p>
             </div>
 
+            <div class="register-body">
+
                 <form action="" method="POST" enctype="multipart/form-data" autocomplete="off" id="registrationForm">
                     <!-- Personal Information Section -->
                     <div class="form-section">
