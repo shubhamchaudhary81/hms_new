@@ -1,7 +1,10 @@
 <?php
 session_start();
+session_unset();
+session_destroy();
 include_once("config/configdatabse.php");
 
+session_start();
 $error = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -9,90 +12,90 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $email = trim($_POST['email']);
   $password = $_POST['password'];
 
-  if ($userType === "guest") {
-    $stmt = $conn->prepare("SELECT id, first_name, last_name, email, password FROM customers WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result && $result->num_rows === 1) {
-      $row = $result->fetch_assoc();
-      if (password_verify($password, $row['password'])) {
-        // Login success
-        $_SESSION['customer_id'] = $row['id'];
-        $_SESSION['customer_name'] = $row['first_name'] . " " . $row['last_name'];
-        $_SESSION['customer_email'] = $row['email'];
-        header("Location: guest/guestdash.php");
-        exit();
-      } else {
-        $error = "Invalid email or password.";
-      }
+    if ($userType === "guest") {
+        $stmt = $conn->prepare("SELECT id, first_name, last_name, email, password FROM customers WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            if (password_verify($password, $row['password'])) {
+                // Login success
+                $_SESSION['customer_id'] = $row['id'];
+                $_SESSION['customer_name'] = $row['first_name'] . " " . $row['last_name'];
+                $_SESSION['customer_email'] = $row['email'];
+                header("Location: guest/guestdash.php");
+                exit();
+            } else {
+                $error = "Invalid email or password.";
+            }
+        } else {
+            $error = "Invalid email or password.";
+        }
+        $stmt->close();
+    } elseif ($userType === "admin") {
+        $stmt = $conn->prepare("SELECT user_id, name, email, password FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            if (password_verify($password, $row['password'])) {
+                $_SESSION['admin_id'] = $row['user_id'];
+                $_SESSION['admin_name'] = $row['name'];
+                $_SESSION['admin_email'] = $row['email'];
+                header("Location: admin/dashboard.php");
+                exit();
+            } else {
+                $error = "Invalid email or password.";
+            }
+        } else {
+            $error = "Invalid email or password.";
+        }
+        $stmt->close();
+    } elseif ($userType === "receptionist") {
+        $stmt = $conn->prepare("SELECT id, name, email, password FROM receptionist WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            if (password_verify($password, $row['password'])) {
+                $_SESSION['receptionist_id'] = $row['id'];
+                $_SESSION['receptionist_name'] = $row['name'];
+                $_SESSION['receptionist_email'] = $row['email'];
+                header("Location: receptionist/receptionistdash.php");
+                exit();
+            } else {
+                $error = "Invalid email or password.";
+            }
+        } else {
+            $error = "Invalid email or password.";
+        }
+        $stmt->close();
+    } elseif ($userType === "manager") {
+        $stmt = $conn->prepare("SELECT id, name, email, password FROM manager WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            if (password_verify($password, $row['password'])) {
+                $_SESSION['manager_id'] = $row['id'];
+                $_SESSION['manager_name'] = $row['name'];
+                $_SESSION['manager_email'] = $row['email'];
+                header("Location: manager/managerdash.php");
+                exit();
+            } else {
+                $error = "Invalid email or password.";
+            }
+        } else {
+            $error = "Invalid email or password.";
+        }
+        $stmt->close();
     } else {
-      $error = "Invalid email or password.";
+        $error = "Invalid user type.";
     }
-    $stmt->close();
-  } elseif ($userType === "admin") {
-    $stmt = $conn->prepare("SELECT user_id, name, email, password FROM users WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result && $result->num_rows === 1) {
-      $row = $result->fetch_assoc();
-      if (password_verify($password, $row['password'])) {
-        $_SESSION['admin_id'] = $row['user_id'];
-        $_SESSION['admin_name'] = $row['name'];
-        $_SESSION['admin_email'] = $row['email'];
-        header("Location: admin/admindash.php");
-        exit();
-      } else {
-        $error = "Invalid email or password.";
-      }
-    } else {
-      $error = "Invalid email or password.";
-    }
-    $stmt->close();
-  } elseif ($userType === "receptionist") {
-    $stmt = $conn->prepare("SELECT id, name, email, password FROM receptionist WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result && $result->num_rows === 1) {
-      $row = $result->fetch_assoc();
-      if (password_verify($password, $row['password'])) {
-        $_SESSION['receptionist_id'] = $row['id'];
-        $_SESSION['receptionist_name'] = $row['name'];
-        $_SESSION['receptionist_email'] = $row['email'];
-        header("Location: receptionist/receptionistdash.php");
-        exit();
-      } else {
-        $error = "Invalid email or password.";
-      }
-    } else {
-      $error = "Invalid email or password.";
-    }
-    $stmt->close();
-  } elseif ($userType === "manager") {
-    $stmt = $conn->prepare("SELECT id, name, email, password FROM manager WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result && $result->num_rows === 1) {
-      $row = $result->fetch_assoc();
-      if (password_verify($password, $row['password'])) {
-        $_SESSION['manager_id'] = $row['id'];
-        $_SESSION['manager_name'] = $row['name'];
-        $_SESSION['manager_email'] = $row['email'];
-        header("Location: manager/managerdash.php");
-        exit();
-      } else {
-        $error = "Invalid email or password.";
-      }
-    } else {
-      $error = "Invalid email or password.";
-    }
-    $stmt->close();
-  } else {
-    $error = "Invalid user type.";
-  }
 }
 ?>
 <!DOCTYPE html>
@@ -112,31 +115,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
 
 </head>
-
- <body>
-
-  <!-- Premium Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">Himalaya Hotel</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.php#about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="rooms.php">Rooms</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.php#services">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.php#gallery">Gallery</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.php#contact">Contact</a></li>
-          <li class="nav-item ms-3"><a href="#" class="btn btn-premium  active">Login / Sign Up</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
- 
-  <div class="login-container ">
+<body>
+  
+  <div class="login-container">
     <div class="login-card">
       <div class="login-header">
         <h1 class="login-title">Himalaya Hotel</h1>
@@ -152,17 +133,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="userType" class="form-label">I am a</label>
             <select class="form-select" id="userType" name="userType" required>
               <option value="guest">
-                <i class="bi bi-person user-type-icon"></i> Guest / Customer
+                <i class="bi bi-person user-type-icon"></i> Guest
               </option>
               <option value="admin">
                 <i class="bi bi-shield-lock user-type-icon"></i> Admin
               </option>
-              <option value="receptionist">
+              <!-- <option value="receptionist">
                 <i class="bi bi-person-lines-fill user-type-icon"></i> Receptionist
               </option>
               <option value="manager">
                 <i class="bi bi-person-gear user-type-icon"></i> Manager
-              </option>
+              </option> -->
             </select>
           </div>
 

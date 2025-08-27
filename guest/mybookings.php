@@ -41,7 +41,7 @@ foreach ($bookings as $b) {
   
   <section class="hero-section">
     <div class="container text-center">
-      <h1 class="display-4 fw-bold mb-3">My Bookings</h1>
+      <h1 class="display-4 fw-bold mb-3" style="color: white;">My Bookings</h1>
       <p class="lead opacity-60">Your journey with Himalaya Hotel</p>
     </div>
   </section>
@@ -66,7 +66,7 @@ foreach ($bookings as $b) {
     
     <div class="summary-card text-center position-relative">
       <div class="position-relative z-index-1">
-        <h4 class="mb-3">Booking Summary</h4>
+        <h4 class="mb-3" style="color: white;">Booking Summary</h4>
         <h2 class="mb-3" style="font-size: 3.5rem; font-weight: 700; color: white;"><?= $totalBookings ?></h2>
         <p class="mb-0 opacity-75">Total bookings with Himalaya Hotel</p>
       </div>

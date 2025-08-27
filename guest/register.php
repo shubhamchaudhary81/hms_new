@@ -200,6 +200,76 @@ if (!empty($errors)) {
     <link rel="stylesheet" href="../css/guestregister.css">
     <link rel="stylesheet" href="../css/mainindex.css">
 
+    <style>
+        /* Premium Navigation */
+    .navbar {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      padding: 15px 0;
+      transition: all 0.3s ease;
+    }
+    
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--primary) !important;
+    }
+    
+    .nav-link {
+      font-weight: 500;
+      color: var(--dark);
+      margin: 0 10px;
+      position: relative;
+    }
+    
+    .nav-link:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: var(--accent);
+      transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover:after,
+    .nav-link.active:after {
+      width: 100%;
+    }
+    
+    .btn-premium {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 25px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(212, 167, 98, 0.3);
+    }
+    
+    .btn-premium:hover {
+      background: #c29555;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212, 167, 98, 0.4);
+    }
+    
+    .btn-danger {
+      background: var(--danger);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 10px 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    </style>
 </head>
 
 <body>
@@ -215,10 +285,10 @@ if (!empty($errors)) {
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="../index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="../index.php#about">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../rooms.php">Rooms</a></li>
                     <li class="nav-item"><a class="nav-link" href="../index.php#services">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../index.php#gallery">Gallery</a></li>
                     <li class="nav-item"><a class="nav-link" href="../index.php#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../index.php#gallery">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../rooms.php">Rooms</a></li>
                     <li class="nav-item ms-3"><a href="#" class="btn btn-premium  active">Login / Sign Up</a></li>
                 </ul>
             </div>

@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -343,19 +345,19 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link sub-link">
+                <a href="add-amenities.php" class="nav-link sub-link">
                     <i class="fas fa-star"></i>
                     <span>Add Amenities</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="#" class="nav-link sub-link">
                     <i class="fas fa-bed"></i>
                     <span>Add Room Amenity</span>
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item">
-                <a href="#" class="nav-link sub-link">
+                <a href="add-roomservices.php" class="nav-link sub-link">
                     <i class="fas fa-concierge-bell"></i>
                     <span>Add Room Services</span>
                 </a>
@@ -372,6 +374,12 @@
                 <a href="reservations.php" class="nav-link">
                     <i class="nav-icon fas fa-calendar-check"></i>
                     <span class="nav-text">Reservations</span>
+                </a>
+            </li>
+            <li class="nav-item" data-tooltip="Reservations">
+                <a href="bookings.php" class="nav-link">
+                  <i class="nav-icon fas fa-book"></i>
+                    <span class="nav-text">Bookings</span>
                 </a>
             </li>
             <li class="nav-item" data-tooltip="Guests">
@@ -392,10 +400,16 @@
                     <span class="nav-text">Staff</span>
                 </a>
             </li>
-            <li class="nav-item" data-tooltip="Billing">
+            <!-- <li class="nav-item" data-tooltip="Billing">
                 <a href="billing.php" class="nav-link">
                     <i class="nav-icon fas fa-receipt"></i>
                     <span class="nav-text">Billing</span>
+                </a>
+            </li> -->
+            <li class="nav-item" data-tooltip="Billing">
+                <a href="../guest/logout.php" class="nav-link">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span class="nav-text">Logout</span>
                 </a>
             </li>
         </ul>

@@ -1,4 +1,9 @@
 <?php
+session_start();
+if ($_SESSION['admin_id'] == "" || $_SESSION['admin_name'] == "") {
+    header("Location: ../login.php");
+    exit();
+} 
 include_once '../config/configdatabse.php';
 
 $headerTitle = "Guest Management";

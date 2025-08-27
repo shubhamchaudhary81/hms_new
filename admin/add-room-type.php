@@ -4,7 +4,7 @@ $headerTitle = "Add Room Type";
 $headerSubtitle = "Manage room types and their descriptions.";
 // $buttonText = "Add New Room";
 // $buttonLink = "newroom.php";
-$showButton = true;
+// $showButton = true;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,7 +55,7 @@ $showButton = true;
 
         .content-header {
             background: white;
-           padding: 5px 10px;
+           padding: 0px 10px;
             border-radius: 15px;
             box-shadow: 0 2px 20px rgba(139, 115, 85, 0.08);
             margin-top: -23px;

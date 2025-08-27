@@ -1,4 +1,10 @@
 <?php
+session_start();
+if ($_SESSION['admin_id'] == "" || $_SESSION['admin_name'] == "") {
+    header("Location: ../login.php");
+    exit();
+} 
+ include '../include/admin/header.php'; 
 $headerTitle = "Room Management";
 $headerSubtitle = "Manage room availability, status, and maintenance schedules.";
 $buttonText = "Add New Room";
@@ -69,7 +75,6 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
 }
 ?>
 
-<?php include '../include/admin/header.php'; ?>
 
 <body>
     <?php include 'sidebar.php'; ?>
@@ -110,7 +115,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
 
         <!-- Room Table -->
         <div class="table-container">
-            <div class="table-header">
+            <!-- <div class="table-header">
                 <h5 class="table-title"><i class="fas fa-list me-2"></i>Room Inventory</h5>
                 <div class="filter-indicator" id="filterIndicator" style="display: none;">
                     <span class="filter-text">Showing: <span id="currentFilter">All Rooms</span></span>
@@ -118,7 +123,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
                         <i class="fas fa-times"></i> Clear Filter
                     </button>
                 </div>
-            </div>
+            </div> -->
             <div class="table-responsive">
                 <table class="table table-hover align-middle">
                     <thead>
@@ -530,7 +535,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             
             xhr.onload = function() {
-                if (xhr.status === 200) {
+                if (xhr.status === 200  ) {
                     try {
                         const response = JSON.parse(xhr.responseText);
                         if (response.success) {
