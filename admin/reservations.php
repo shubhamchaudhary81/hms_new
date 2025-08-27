@@ -1,5 +1,9 @@
 <?php
 session_start();
+if ($_SESSION['admin_id'] == "" || $_SESSION['admin_name'] == "") {
+    header("Location: ../login.php");
+    exit();
+} 
 $headerTitle = "Reservation Management";
 $headerSubtitle = "Manage all hotel bookings and reservations";
 $buttonText = "New Reservation";

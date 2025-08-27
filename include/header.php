@@ -132,7 +132,7 @@
           <a class="nav-link <?= $current == 'guestdash.php' ? 'active' : '' ?>" href="../guest/guestdash.php">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link <?= $current == 'book.php' ? 'active' : '' ?>" href="../guest/book.php">Book Room</a>
+          <a class="nav-link <?= $current == 'book.php' ? 'active' : '' ?>" href="../guest/book.php">Reserve Room</a>
         </li>
         <li class="nav-item">
           <a class="nav-link <?= $current == 'mybookings.php' ? 'active' : '' ?>" href="../guest/mybookings.php">My Bookings</a>

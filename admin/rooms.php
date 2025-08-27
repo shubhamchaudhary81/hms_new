@@ -1,4 +1,9 @@
 <?php
+session_start();
+if ($_SESSION['admin_id'] == "" || $_SESSION['admin_name'] == "") {
+    header("Location: ../login.php");
+    exit();
+} 
  include '../include/admin/header.php'; 
 $headerTitle = "Room Management";
 $headerSubtitle = "Manage room availability, status, and maintenance schedules.";

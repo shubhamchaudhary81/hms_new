@@ -18,8 +18,8 @@
       font-weight: 600;
       color: var(--primary-color);
     }
-    
-    /* .hero-section {
+/*     
+    .hero-section {
       background: linear-gradient(135deg, var(--primary-color) 0%, #8d6e63 100%);
       color: white;
       padding: 100px 0 60px;
@@ -27,7 +27,7 @@
       position: relative;
       overflow: hidden;
     }
-     */
+    
     .hero-section::before {
       content: '';
       position: absolute;
@@ -69,6 +69,47 @@
     .current-stay-card:hover {
       transform: translateY(-5px);
       box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+    }
+     */
+       /* Hero Section */
+    .hero-section {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      padding: 120px 0 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('../assets/images/hotel-exterior.jpg') center/cover no-repeat;
+      opacity: 0.15;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    
+    .hero-title {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      /* color: var(--light); */
+      color: white;
+    }
+
+  
+    
+    .hero-subtitle {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
     }
     
     .room-icon {

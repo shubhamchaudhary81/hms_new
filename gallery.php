@@ -1,83 +1,176 @@
+<?php
+include 'config/configdatabse.php';
+session_start();  // <-- add this line (important!)
+
+include 'config/configdatabse.php';
+
+// Generate CSRF token if not exists
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+
+
+// Fetch all images
+$result = $conn->query("SELECT * FROM gallery WHERE is_deleted = 0 ORDER BY id DESC");
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>gallery</title>
-  <!-- Bootstrap CSS -->
+  <title>Photo Gallery - Hotel</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/mainindex.css">
+  <style>
+    body {
+      background: #f8f9fa;
+    }
 
-  <!-- Lightbox CSS -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+      border-radius: 10px;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+  </style>
 </head>
 
 <body>
-  <!-- ===== GALLERY SECTION ===== -->
-  <section id="gallery" class="py-5 bg-light">
+  <!-- Premium Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top">
     <div class="container">
-      <!-- Section Title -->
-      <div class="text-center mb-5">
-        <h2 class="fw-bold">Our Gallery</h2>
-        <p class="text-muted">Discover our elegant rooms, dining areas, event spaces, and wellness facilities.</p>
-      </div>
-
-      <!-- Filter Buttons -->
-      <div class="d-flex justify-content-center mb-4 flex-wrap gap-2">
-        <button class="btn btn-outline-primary active" data-filter="all">All</button>
-        <button class="btn btn-outline-primary" data-filter="rooms">Rooms</button>
-        <button class="btn btn-outline-primary" data-filter="dining">Dining</button>
-        <button class="btn btn-outline-primary" data-filter="hall">Event Halls</button>
-        <button class="btn btn-outline-primary" data-filter="wellness">Wellness</button>
-      </div>
-
-      <!-- Gallery Grid -->
-      <div class="row g-4">
-        <!-- Example Item -->
-        <div class="col-md-4 gallery-item rooms">
-          <a href="images/room1.jpg" data-lightbox="gallery" data-title="Deluxe Room">
-            <img src="uploads/room_images/delux.jpg" class="img-fluid rounded shadow-sm" alt="Room">
-          </a>
-        </div>
-
-        <div class="col-md-4 gallery-item dining">
-          <a href="images/dining1.jpg" data-lightbox="gallery" data-title="Fine Dining">
-            <img src="images/dining1.jpg" class="img-fluid rounded shadow-sm" alt="Dining">
-          </a>
-        </div>
-
-        <div class="col-md-4 gallery-item hall">
-          <a href="images/hall1.jpg" data-lightbox="gallery" data-title="Conference Hall">
-            <img src="images/hall1.jpg" class="img-fluid rounded shadow-sm" alt="Hall">
-          </a>
-        </div>
-
-        <div class="col-md-4 gallery-item wellness">
-          <a href="images/spa1.jpg" data-lightbox="gallery" data-title="Spa & Wellness">
-            <img src="images/spa1.jpg" class="img-fluid rounded shadow-sm" alt="Spa">
-          </a>
-        </div>
+      <a class="navbar-brand" href="#">Himalaya Hotel</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.php#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="rooms.php">Rooms</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.php#services">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.php#gallery">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.php#contact">Contact</a></li>
+          <li class="nav-item ms-3"><a href="login.php" class="btn btn-premium">Login / Sign Up</a></li>
+        </ul>
       </div>
     </div>
-  </section>
+  </nav>
 
-  <!-- ===== Lightbox & Filter Script ===== -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"></script>
+  <!-- Page Header -->
+  <div class="container">
+    <div class="container text-center py-5 mt-5">
+      <h2 class="section-title">Photo Gallery</h2>
+      <p class="lead text-muted">Browse our complete collection of photos from rooms, dining, events, and wellness.</p>
+    </div>
 
+    <!-- Filter Buttons -->
+    <div class="text-center mb-4">
+      <button class="btn btn-premium me-2 filter-btn active" data-filter="all">All</button>
+      <button class="btn btn-premium me-2 filter-btn" data-filter="rooms">Rooms</button>
+      <button class="btn btn-premium me-2 filter-btn" data-filter="dining">Dining</button>
+      <button class="btn btn-premium me-2 filter-btn" data-filter="hall">Event Halls</button>
+      <button class="btn btn-premium me-2 filter-btn" data-filter="wellness">Wellness</button>
+    </div>
+
+    <!-- Full Gallery -->
+    <div class="container">
+      <div class="row g-4">
+        <?php while ($row = $result->fetch_assoc()): ?>
+          <div class="col-md-4 gallery-item" data-category="<?= htmlspecialchars($row['category']); ?>">
+            <img src="<?= htmlspecialchars($row['image_path']); ?>" alt="<?= htmlspecialchars($row['alt_text']); ?>">
+            <!-- Soft Delete Button -->
+            <form action="remove_image.php" method="post" class="mt-2">
+              <input type="hidden" name="id" value="<?= $row['id']; ?>">
+              <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+            </form>
+          </div>
+        <?php endwhile; ?>
+
+      </div>
+    </div>
+
+    <!-- Add Image Button -->
+    <div class="text-center py-4">
+      <button class="btn btn-premium px-4 py-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#addImageModal">
+        + Add Image
+      </button>
+      <!-- <a href="index.php" class="btn btn-premium px-4 py-2 rounded-pill">
+        ← Back to Homepage
+      </a> -->
+    </div>
+  </div>
+
+  <!-- Add Image Modal -->
+  <div class="modal fade" id="addImageModal" tabindex="-1" aria-labelledby="addImageModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form action="upload.php" method="post" enctype="multipart/form-data" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addImageModalLabel">Add New Image</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+
+          <div class="mb-3">
+            <label class="form-label">Category</label>
+            <select name="category" class="form-select" required>
+              <option value="rooms">Rooms</option>
+              <option value="dining">Dining</option>
+              <option value="hall">Event Halls</option>
+              <option value="wellness">Wellness</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Alt Text</label>
+            <input type="text" name="alt_text" class="form-control" placeholder="Description (optional)">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Select Image</label>
+            <input type="file" name="image" class="form-control" accept="image/*" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-premium">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Filter Script -->
   <script>
-    // Simple filter script
-    const filterBtns = document.querySelectorAll("[data-filter]");
-    const items = document.querySelectorAll(".gallery-item");
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const galleryItems = document.querySelectorAll(".gallery-item");
 
-    filterBtns.forEach(btn => {
+    filterButtons.forEach(btn => {
       btn.addEventListener("click", () => {
-        filterBtns.forEach(b => b.classList.remove("active"));
+        filterButtons.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
 
         const filter = btn.getAttribute("data-filter");
-        items.forEach(item => {
-          if (filter === "all" || item.classList.contains(filter)) {
+
+        galleryItems.forEach(item => {
+          if (filter === "all" || item.getAttribute("data-category") === filter) {
             item.style.display = "block";
           } else {
             item.style.display = "none";
@@ -87,6 +180,7 @@
     });
   </script>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

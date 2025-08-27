@@ -116,6 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 </head>
 <body>
+  
   <div class="login-container">
     <div class="login-card">
       <div class="login-header">
@@ -132,17 +133,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="userType" class="form-label">I am a</label>
             <select class="form-select" id="userType" name="userType" required>
               <option value="guest">
-                <i class="bi bi-person user-type-icon"></i> Guest / Customer
+                <i class="bi bi-person user-type-icon"></i> Guest
               </option>
               <option value="admin">
                 <i class="bi bi-shield-lock user-type-icon"></i> Admin
               </option>
-              <option value="receptionist">
+              <!-- <option value="receptionist">
                 <i class="bi bi-person-lines-fill user-type-icon"></i> Receptionist
               </option>
               <option value="manager">
                 <i class="bi bi-person-gear user-type-icon"></i> Manager
-              </option>
+              </option> -->
             </select>
           </div>
 

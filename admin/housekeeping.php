@@ -1,4 +1,9 @@
 <?php
+session_start();
+if ($_SESSION['admin_id'] == "" || $_SESSION['admin_name'] == "") {
+    header("Location: ../login.php");
+    exit();
+} 
 $headerTitle = "Housekeeping Management";
 $headerSubtitle = "Track room cleaning tasks and maintenance schedules";
 $buttonText = "Create Task";

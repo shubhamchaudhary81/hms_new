@@ -73,9 +73,9 @@ if ($customerId) {
       <div class="col-md-4">
         <div class="action-card text-center">
           <div class="action-icon">
-            <i class="bi bi-calendar2-plus"></i>
+            <i class="bi bi-calendar2-plus"></i>  
           </div>
-          <h3 class="action-title">Book a Room</h3>
+          <h3 class="action-title">Reserve a Room</h3>
           <p class="mb-4">Reserve your perfect stay with our curated selection of luxury rooms and suites.</p>
           <a href="book.php" class="btn btn-premium">Book Now</a>
         </div>
