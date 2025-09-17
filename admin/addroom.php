@@ -28,14 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Collect form data
     $room_number = $_POST['room_number'];
     $room_name = $_POST['room_name']; // new field
-    $room_type = (int)$_POST['room_type_id'];
-    $price_per_night = (float)$_POST['price_per_night'];
+    $room_type = (int) $_POST['room_type_id'];
+    $price_per_night = (float) $_POST['price_per_night'];
     $status = $_POST['status'];
-    $floor_number = (int)$_POST['floor_number'];
+    $floor_number = (int) $_POST['floor_number'];
     $description = $_POST['description'];
-    $weekend_price = (float)$_POST['weekend_price'];
-    $season_price = (float)$_POST['season_price'];
-    $capacity = (int)$_POST['capacity'];
+    $weekend_price = (float) $_POST['weekend_price'];
+    $season_price = (float) $_POST['season_price'];
+    $capacity = (int) $_POST['capacity'];
     $image = $targetFile;
 
     // Updated SQL with room_name after room_number
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // if (isset($_POST['amenities']) && is_array($_POST['amenities'])) {
         //     $amenitySql = "INSERT INTO RoomAmenity (room_id, amenity_id, quantity) VALUES (?, ?, 1)";
         //     $amenityStmt = $conn->prepare($amenitySql);
-            
+
         //     foreach ($_POST['amenities'] as $amenity_id) {
         //         $amenityStmt->bind_param("ii", $room_id, $amenity_id);
         //         $amenityStmt->execute();
@@ -99,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -106,6 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/admin/addroom.css">
 </head>
+
 <body>
     <?php include 'sidebar.php'; ?>
     <!-- Main Content -->
@@ -164,22 +166,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <!-- Form Container -->
         <div class="form-container">
             <form id="roomForm" method="POST" enctype="multipart/form-data">
-        
-                
+
+
                 <!-- Stage 1: Basic Information -->
                 <div class="form-stage active" id="stage-1">
                     <div class="stage-header">
                         <h2><i class="fas fa-info-circle"></i> Basic Information</h2>
                         <p>Enter the fundamental details about the room</p>
                     </div>
-                    
+
                     <div class="form-grid">
                         <div class="form-group">
                             <label class="form-label">
                                 <i class="fas fa-door-open"></i>
                                 Room Number
                             </label>
-                            <input type="number" class="form-input" name="room_number" placeholder="Enter room number" required>
+                            <input type="number" class="form-input" name="room_number" placeholder="Enter room number"
+                                required>
                             <div class="error-message"></div>
                         </div>
 
@@ -188,12 +191,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <i class="fas fa-bed"></i>
                                 Room Type
                             </label>
-                             <select name="room_type_id" class="form-input" required>
-                                    <option value="">Select Room Type</option>
-                                    <?php foreach ($roomTypes as $type): ?>
-                                        <option value="<?= $type['room_type_id'] ?>"><?= htmlspecialchars($type['room_type_name']) ?></option>
-                                    <?php endforeach; ?>
-                                </select>
+                            <select name="room_type_id" class="form-input" required>
+                                <option value="">Select Room Type</option>
+                                <?php foreach ($roomTypes as $type): ?>
+                                    <option value="<?= $type['room_type_id'] ?>">
+                                        <?= htmlspecialchars($type['room_type_name']) ?></option>
+                                <?php endforeach; ?>
+                            </select>
                             <div class="error-message"></div>
                         </div>
 
@@ -213,24 +217,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="error-message"></div>
                         </div>
 
-                       <div class="form-group">
-    <label class="form-label">
-        <i class="fas fa-tag"></i>
-        Room Name
-    </label>
-    <input type="text" class="form-input" name="room_name" placeholder="Enter room name" required>
-    <div class="error-message"></div>
-</div>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-tag"></i>
+                                Room Name
+                            </label>
+                            <input type="text" class="form-input" name="room_name" placeholder="Enter room name"
+                                required>
+                            <div class="error-message"></div>
+                        </div>
 
-<!-- Hidden Room Status (Always Available) -->
-<input type="hidden" name="status" value="Available">
+                        <!-- Hidden Room Status (Always Available) -->
+                        <input type="hidden" name="status" value="Available">
 
                         <div class="form-group">
                             <label class="form-label">
                                 <i class="fas fa-users"></i>
                                 Maximum Capacity
                             </label>
-                            <input type="number" class="form-input" name="capacity" placeholder="Enter max guests" min="1" max="10" required>
+                            <input type="number" class="form-input" name="capacity" placeholder="Enter max guests"
+                                min="1" max="10" required>
                             <div class="error-message"></div>
                         </div>
                     </div>
@@ -242,7 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h2><i class="fas fa-dollar-sign"></i> Pricing Information</h2>
                         <p>Set up pricing structure for different periods</p>
                     </div>
-                    
+
                     <div class="form-grid">
                         <div class="form-group">
                             <label class="form-label">
@@ -251,7 +257,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </label>
                             <div class="input-group">
                                 <span class="input-prefix">$</span>
-                                <input type="number" class="form-input" name="price_per_night" placeholder="Enter base price" step="0.01" required>
+                                <input type="number" class="form-input" name="price_per_night"
+                                    placeholder="Enter base price" step="0.01" required>
                             </div>
                             <div class="error-message"></div>
                         </div>
@@ -263,7 +270,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </label>
                             <div class="input-group">
                                 <span class="input-prefix">$</span>
-                                <input type="number" class="form-input" name="weekend_price" placeholder="Enter weekend price" step="0.01">
+                                <input type="number" class="form-input" name="weekend_price"
+                                    placeholder="Enter weekend price" step="0.01">
                             </div>
                             <div class="error-message"></div>
                         </div>
@@ -275,7 +283,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </label>
                             <div class="input-group">
                                 <span class="input-prefix">$</span>
-                                <input type="number" class="form-input" name="season_price" placeholder="Enter seasonal price" step="0.01">
+                                <input type="number" class="form-input" name="season_price"
+                                    placeholder="Enter seasonal price" step="0.01">
                             </div>
                             <div class="error-message"></div>
                         </div>
@@ -306,7 +315,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h2><i class="fas fa-star"></i> Room Amenities</h2>
                         <p>Select all amenities available in this room</p>
                     </div>
-                    
+
                     <div class="amenities-grid">
                         <div class="amenity-category">
                             <h3>Basic Amenities</h3>
@@ -405,7 +414,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- <div class="mb-5">
                         <h3 class="form-section-title"><i class="bi bi-stars"></i>Amenities</h3>
                         <div class="row">
-                            <?php 
+                            <?php
                             $amenityCount = count($amenities);
                             $halfCount = ceil($amenityCount / 2);
                             ?>
@@ -442,13 +451,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h2><i class="fas fa-align-left"></i> Room Description</h2>
                         <p>Provide detailed information about the room</p>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="form-label">
                             <i class="fas fa-edit"></i>
                             Detailed Description
                         </label>
-                        <textarea class="form-textarea" name="description" rows="5" placeholder="Enter a detailed description of the room, including features, view, and any special characteristics..."></textarea>
+                        <textarea class="form-textarea" name="description" rows="5"
+                            placeholder="Enter a detailed description of the room, including features, view, and any special characteristics..."></textarea>
                         <div class="character-count">
                             <span id="char-count">0</span> / 500 characters
                         </div>
@@ -472,7 +482,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h2><i class="fas fa-camera"></i> Room Images</h2>
                         <p>Upload high-quality photos of the room</p>
                     </div>
-                    
+
                     <div class="image-upload-area">
                         <div class="upload-zone" id="uploadZone">
                             <i class="fas fa-cloud-upload-alt"></i>
@@ -480,7 +490,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <p>or click to browse files</p>
                             <input type="file" id="imageInput" name="room_images[]" multiple accept="image/*" hidden>
                         </div>
-                        
+
                         <div class="upload-guidelines">
                             <h4>Image Guidelines</h4>
                             <ul>
@@ -503,7 +513,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <i class="fas fa-arrow-left"></i>
                         Previous
                     </button>
-                    
+
                     <div class="nav-right">
                         <button type="button" class="btn btn-outline" id="saveAsDraft">
                             <i class="fas fa-save"></i>
@@ -545,4 +555,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script src="../js/admin/addroom.js"></script>
 </body>
+
 </html>

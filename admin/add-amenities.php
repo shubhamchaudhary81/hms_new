@@ -1,7 +1,47 @@
 <?php
-  $headerTitle = "Add Amenity";
-        $headerSubtitle = "Add new amenities to enhance room features.";
-        ?>
+$headerTitle = "Add Amenity";
+$headerSubtitle = "Add new amenities to enhance room features.";
+
+session_start();
+include_once '../config/configdatabse.php';
+
+// Initialize message variables from session
+$success_message = isset($_SESSION['success_message']) ? $_SESSION['success_message'] : '';
+$error_message = isset($_SESSION['error_message']) ? $_SESSION['error_message'] : '';
+$warning_message = isset($_SESSION['warning_message']) ? $_SESSION['warning_message'] : '';
+
+// Clear session messages after retrieving them
+unset($_SESSION['success_message']);
+unset($_SESSION['error_message']);
+unset($_SESSION['warning_message']);
+
+// Add Amenity
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_amenity'])) {
+    $amenity_name = trim($_POST['amenity_name']);
+    $description = trim($_POST['description']);
+    $icon_url = trim($_POST['icon_url']);
+
+    if (!empty($amenity_name)) {
+        $stmt = $conn->prepare("INSERT INTO Amenity (amenity_name, description, icon_url) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $amenity_name, $description, $icon_url);
+        if ($stmt->execute()) {
+            $_SESSION['success_message'] = "Amenity added successfully!";
+            $stmt->close();
+            header("Location: add-amenities.php"); // reload same page
+            exit();
+        } else {
+            $_SESSION['error_message'] = "Error: " . $stmt->error;
+            $stmt->close();
+            header("Location: add-amenities.php"); // reload same page
+            exit();
+        }
+    } else {
+        $_SESSION['warning_message'] = "Please provide an amenity name.";
+        header("Location: add-amenities.php"); // reload same page
+        exit();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,7 +95,7 @@
             border-radius: 12px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             overflow: hidden;
-            max-width: 800px;
+            max-width: 1334px;
             margin: 0 auto;
         }
 
@@ -189,6 +229,27 @@
             </div>
 
             <div class="form-body">
+                <?php if (!empty($success_message)): ?>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <?= $success_message ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (!empty($error_message)): ?>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <?= $error_message ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (!empty($warning_message)): ?>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <?= $warning_message ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php endif; ?>
+
                 <form method="POST" action="">
                     <input type="hidden" name="add_amenity" value="1">
 

@@ -659,11 +659,11 @@ while ($row = $result->fetch_assoc()) {
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
+                    <li class="nav-item"><a class="nav-link " href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="index.php#about">About</a></li>
                     <li class="nav-item"><a class="nav-link" href="index.php#services">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.php#gallery">Gallery</a></li>
                     <li class="nav-item"><a class="nav-link" href="rooms.php">Rooms</a></li>
                     <li class="nav-item ms-3"><a href="login.php" class="btn btn-premium">Login / Sign Up</a></li>
                 </ul>
@@ -848,7 +848,7 @@ while ($row = $result->fetch_assoc()) {
                                     <span class="detail-label">Floor:</span>
                                     <span class="detail-value"><?= htmlspecialchars($room['floor_number']) ?></span>
                                 </div>
-                                <div class="detail-item">
+                                <!-- <div class="detail-item">
                                     <i class="bi bi-arrows-angle-expand detail-icon"></i>
                                     <span class="detail-label">Size:</span>
                                     <span class="detail-value"><?= htmlspecialchars($room['size'] ?? 'N/A') ?></span>
@@ -857,7 +857,7 @@ while ($row = $result->fetch_assoc()) {
                                     <i class="bi bi-eye detail-icon"></i>
                                     <span class="detail-label">View:</span>
                                     <span class="detail-value"><?= htmlspecialchars($room['view_type'] ?? 'City') ?></span>
-                                </div>
+                                </div> -->
                             </div>
 
                             <?php if (!empty($room['amenities'])): ?>
@@ -904,6 +904,54 @@ while ($row = $result->fetch_assoc()) {
         </div>
     </section>
 
+    
+  <!-- Premium Footer -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h3 class="footer-title">Himalaya Hotel</h3>
+          <p>Experience the pinnacle of luxury hospitality in the heart of the mountains. Our commitment to excellence
+            ensures memorable stays for all our guests.</p>
+          <div class="mt-3">
+            <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <h3 class="footer-title">Quick Links</h3>
+          <div class="footer-links">
+            <a href="#">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#rooms">Rooms</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4">
+          <h3 class="footer-title">Contact Us</h3>
+          <p><i class="bi bi-geo-alt me-2"></i> College Road, Biratnagar</p>
+          <p><i class="bi bi-telephone me-2"></i> +977 9819096819</p>
+          <p><i class="bi bi-envelope me-2"></i> info@himalayahotel.com</p>
+        </div>
+        <!-- <div class="col-lg-3 col-md-4">
+          <h3 class="footer-title">Newsletter</h3>
+          <p>Subscribe to receive updates and special offers.</p>
+          <div class="input-group mb-3">
+            <input type="email" class="form-control" placeholder="Your Email">
+            <button class="btn btn-danger" type="button">Subscribe</button>
+          </div>
+        </div> -->
+      </div>
+      <hr class="my-4 bg-light opacity-10">
+      <div class="text-center">
+        <p class="mb-0">&copy; 2025 Passion Chasers. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Wishlist functionality

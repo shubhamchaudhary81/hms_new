@@ -109,7 +109,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
                     <i class="fas fa-tools"></i>
                 </div>
                 <div class="stat-number"><?= $maintenance_count ?></div>
-                <div class="stat-label">Maintenance</div>
+                <div class="stat-label">Out of Order </div>
             </div>
         </div>
 
@@ -209,7 +209,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
                                             $statusClass = 'status-occupied';
                                             $statusIcon = 'fas fa-exclamation-circle';
                                         } elseif ($status == 'maintenance') {
-                                            $statusClass = 'status-maintenance';
+                                            $statusClass = 'status-OutOfOrder';
                                             $statusIcon = 'fas fa-tools';
                                         }
                                     ?>

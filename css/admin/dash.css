@@ -20,9 +20,9 @@
             min-height: 100vh;
         }
 
-        .sidebar.collapsed + .main-content {
+        /* .sidebar.collapsed + .main-content {
             margin-left: 80px;
-        }
+        } */
 
         .content-headeradmin {
             background: white;
@@ -230,27 +230,6 @@
             position: relative;
         }
 
-        .sidebar.collapsed .tooltip::after {
-            content: attr(data-tooltip);
-            position: absolute;
-            left: 70px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #333;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 12px;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            z-index: 1000;
-        }
-
-        .sidebar.collapsed .tooltip:hover::after {
-            opacity: 1;
-        }
 
         @media (max-width: 768px) {
             /* .sidebar {

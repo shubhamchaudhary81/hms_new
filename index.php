@@ -60,7 +60,7 @@ if (!$result) {
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+          <li class="nav-item"><a class="nav-link " href="#">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
           <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
@@ -144,7 +144,7 @@ if (!$result) {
             <div class="room-body">
               <h3 class="room-title">Luxury Suite</h3>
               <p>Luxury suite with stunning views, premium amenities, and personalized service.</p>
-              <a href="#" class="btn btn-outline-primary">View Details</a>
+              <!-- <a href="#" class="btn btn-outline-primary">View Details</a> -->
             </div>
           </div>
         </div>
@@ -156,7 +156,7 @@ if (!$result) {
             <div class="room-body">
               <h3 class="room-title">Deluxe Room</h3>
               <p>Elegant room with modern comforts, perfect for both business and leisure travelers.</p>
-              <a href="#" class="btn btn-outline-primary">View Details</a>
+              <!-- <a href="#" class="btn btn-outline-primary">View Details</a> -->
             </div>
           </div>
         </div>
@@ -166,14 +166,14 @@ if (!$result) {
             <div class="room-body">
               <h3 class="room-title">Standard Room</h3>
               <p>Comfortable and cozy accommodation with all essential amenities for a pleasant stay.</p>
-              <a href="#" class="btn btn-outline-primary">View Details</a>
+              <!-- <a href="#" class="btn btn-outline-primary">View Details</a> -->
             </div>
           </div>
         </div>
       </div>
 
       <div class="text-center mt-4">
-        <a href="#rooms" class="btn btn-premium">View All Rooms</a>
+        <a href="rooms.php" class="btn btn-premium">View All Rooms</a>
       </div>
     </div>
   </section>
@@ -243,13 +243,13 @@ if (!$result) {
       </div>
 
       <!-- Filter Buttons -->
-      <div class="text-center mb-4">
+      <!-- <div class="text-center mb-4">
         <button class="btn btn-premium me-2 filter-btn active" data-filter="all">All</button>
         <button class="btn btn-premium me-2 filter-btn" data-filter="rooms">Rooms</button>
         <button class="btn btn-premium  me-2 filter-btn" data-filter="dining">Dining</button>
         <button class="btn btn-premium  me-2 filter-btn" data-filter="hall">Event Halls</button>
         <button class="btn btn-premium me-2 filter-btn" data-filter="wellness">Wellness</button>
-      </div>
+      </div> -->
 
       <!-- Gallery Grid -->
       <div class="row g-4">
@@ -330,6 +330,8 @@ if (!$result) {
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
+    
+
     const filterButtons = document.querySelectorAll('[data-filter]');
     const galleryItems = document.querySelectorAll('.gallery-item');
 

@@ -1,7 +1,6 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,12 +19,14 @@
             --sidebar-width: 280px;
             --sidebar-collapsed-width: 80px;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #fafafa;
             color: #333;
             overflow-x: hidden;
         }
+
         /* Sidebar Styles */
         .sidebar {
             position: fixed;
@@ -272,7 +273,7 @@
             min-height: 100vh;
         }
 
-        .sidebar.collapsed + .main-content {
+        .sidebar.collapsed+.main-content {
             margin-left: var(--sidebar-collapsed-width);
         }
 
@@ -281,11 +282,11 @@
             .sidebar {
                 transform: translateX(-100%);
             }
-            
+
             .sidebar.mobile-open {
                 transform: translateX(0);
             }
-            
+
             .main-content {
                 margin-left: 0;
                 padding: 1.25rem;
@@ -311,6 +312,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
@@ -331,7 +333,7 @@
                     <span class="nav-text">Dashboard</span>
                 </a>
             </li>
-            
+
             <!-- SETUPS GROUP (no dropdown now) -->
             <li class="nav-item group-label">
                 <span class="group-title">
@@ -378,7 +380,7 @@
             </li>
             <li class="nav-item" data-tooltip="Reservations">
                 <a href="bookings.php" class="nav-link">
-                  <i class="nav-icon fas fa-book"></i>
+                    <i class="nav-icon fas fa-book"></i>
                     <span class="nav-text">Bookings</span>
                 </a>
             </li>
@@ -392,6 +394,12 @@
                 <a href="housekeeping.php" class="nav-link">
                     <i class="nav-icon fas fa-broom"></i>
                     <span class="nav-text">Housekeeping</span>
+                </a>
+            </li>
+            <li class="nav-item" data-tooltip="Facilities">
+                <a href="facilities.php" class="nav-link">
+                    <i class="nav-icon fas fa-building"></i>
+                    <span class="nav-text">Facilities</span>
                 </a>
             </li>
             <li class="nav-item" data-tooltip="Staff">
@@ -428,7 +436,7 @@
         if (toggleBtn) {
             toggleBtn.addEventListener('click', () => {
                 sidebar.classList.toggle('collapsed');
-                
+
                 if (sidebar.classList.contains('collapsed')) {
                     toggleIcon.classList.remove('fa-chevron-left');
                     toggleIcon.classList.add('fa-chevron-right');
@@ -459,4 +467,5 @@
         });
     </script>
 </body>
+
 </html>

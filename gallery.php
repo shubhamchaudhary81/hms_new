@@ -65,12 +65,12 @@ $result = $conn->query("SELECT * FROM gallery WHERE is_deleted = 0 ORDER BY id D
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
           <li class="nav-item"><a class="nav-link" href="index.php#about">About</a></li>
-          <li class="nav-item"><a class="nav-link" href="rooms.php">Rooms</a></li>
           <li class="nav-item"><a class="nav-link" href="index.php#services">Services</a></li>
-          <li class="nav-item"><a class="nav-link" href="index.php#gallery">Gallery</a></li>
           <li class="nav-item"><a class="nav-link" href="index.php#contact">Contact</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.php#gallery">Gallery</a></li>
+          <li class="nav-item"><a class="nav-link" href="rooms.php">Rooms</a></li>
           <li class="nav-item ms-3"><a href="login.php" class="btn btn-premium">Login / Sign Up</a></li>
         </ul>
       </div>
@@ -102,7 +102,7 @@ $result = $conn->query("SELECT * FROM gallery WHERE is_deleted = 0 ORDER BY id D
             <!-- Soft Delete Button -->
             <form action="remove_image.php" method="post" class="mt-2">
               <input type="hidden" name="id" value="<?= $row['id']; ?>">
-              <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+              <!-- <button type="submit" class="btn btn-danger btn-sm">Remove</button> -->
             </form>
           </div>
         <?php endwhile; ?>
@@ -112,9 +112,9 @@ $result = $conn->query("SELECT * FROM gallery WHERE is_deleted = 0 ORDER BY id D
 
     <!-- Add Image Button -->
     <div class="text-center py-4">
-      <button class="btn btn-premium px-4 py-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#addImageModal">
+      <!-- <button class="btn btn-premium px-4 py-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#addImageModal">
         + Add Image
-      </button>
+      </button> -->
       <!-- <a href="index.php" class="btn btn-premium px-4 py-2 rounded-pill">
         ← Back to Homepage
       </a> -->
@@ -156,6 +156,54 @@ $result = $conn->query("SELECT * FROM gallery WHERE is_deleted = 0 ORDER BY id D
       </form>
     </div>
   </div>
+
+  
+  <!-- Premium Footer -->
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <h3 class="footer-title">Himalaya Hotel</h3>
+          <p>Experience the pinnacle of luxury hospitality in the heart of the mountains. Our commitment to excellence
+            ensures memorable stays for all our guests.</p>
+          <div class="mt-3">
+            <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <h3 class="footer-title">Quick Links</h3>
+          <div class="footer-links">
+            <a href="#">Home</a>
+            <a href="#about">About Us</a>
+            <a href="#rooms">Rooms</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-4">
+          <h3 class="footer-title">Contact Us</h3>
+          <p><i class="bi bi-geo-alt me-2"></i> College Road, Biratnagar</p>
+          <p><i class="bi bi-telephone me-2"></i> +977 9819096819</p>
+          <p><i class="bi bi-envelope me-2"></i> info@himalayahotel.com</p>
+        </div>
+        <!-- <div class="col-lg-3 col-md-4">
+          <h3 class="footer-title">Newsletter</h3>
+          <p>Subscribe to receive updates and special offers.</p>
+          <div class="input-group mb-3">
+            <input type="email" class="form-control" placeholder="Your Email">
+            <button class="btn btn-danger" type="button">Subscribe</button>
+          </div>
+        </div> -->
+      </div>
+      <hr class="my-4 bg-light opacity-10">
+      <div class="text-center">
+        <p class="mb-0">&copy; 2025 Passion Chasers. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
 
   <!-- Filter Script -->
   <script>

@@ -1,13 +1,76 @@
 <?php
-
+session_start();
+include_once '../config/configdatabse.php';
 $headerTitle = "Add Room Type";
 $headerSubtitle = "Manage room types and their descriptions.";
 // $buttonText = "Add New Room";
 // $buttonLink = "newroom.php";
 // $showButton = true;
+
+// Initialize message variables from session
+$success_message = isset($_SESSION['success_message']) ? $_SESSION['success_message'] : '';
+$error_message = isset($_SESSION['error_message']) ? $_SESSION['error_message'] : '';
+$warning_message = isset($_SESSION['warning_message']) ? $_SESSION['warning_message'] : '';
+
+// Clear session messages after retrieving them
+unset($_SESSION['success_message']);
+unset($_SESSION['error_message']);
+unset($_SESSION['warning_message']);
+
+// // Add Room Type
+// if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_room_type'])) {
+//     $room_type_name = trim($_POST['room_type_name']);
+//     $description = trim($_POST['description']);
+//     if (!empty($room_type_name) && !empty($description)) {
+//         $stmt = $conn->prepare("INSERT INTO RoomType (room_type_name, description) VALUES (?, ?)");
+//         $stmt->bind_param("ss", $room_type_name, $description);
+//         if ($stmt->execute()) {
+//             $_SESSION['success_message'] = "Room Type added successfully!";
+//             $stmt->close();
+//             header("Location: rooms.php");
+//             exit();
+//         } else {
+//             $_SESSION['error_message'] = "Error: " . $stmt->error;
+//             $stmt->close();
+//             header("Location: add-room-type.php");
+//             exit();
+//         }
+//     } else {
+//         $_SESSION['warning_message'] = "Please fill all required fields properly.";
+//         header("Location: add-room-type.php");
+//         exit();
+//     }
+// }
+
+// new code for adding room type
+// Add Room Type
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_room_type'])) {
+    $room_type_name = trim($_POST['room_type_name']);
+    $description = trim($_POST['description']);
+    if (!empty($room_type_name) && !empty($description)) {
+        $stmt = $conn->prepare("INSERT INTO RoomType (room_type_name, description) VALUES (?, ?)");
+        $stmt->bind_param("ss", $room_type_name, $description);
+        if ($stmt->execute()) {
+            $_SESSION['success_message'] = "Room Type added successfully!";
+            $stmt->close();
+            header("Location: add-room-type.php"); // redirect to same page
+            exit();
+        } else {
+            $_SESSION['error_message'] = "Error: " . $stmt->error;
+            $stmt->close();
+            header("Location: add-room-type.php"); // redirect to same page
+            exit();
+        }
+    } else {
+        $_SESSION['warning_message'] = "Please fill all required fields properly.";
+        header("Location: add-room-type.php"); // redirect to same page
+        exit();
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,13 +88,13 @@ $headerSubtitle = "Manage room types and their descriptions.";
             --light-gray: #f8f9fa;
             --border-color: #e9e9e9;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Inter', sans-serif;
             color: var(--text-dark);
@@ -41,7 +104,7 @@ $headerSubtitle = "Manage room types and their descriptions.";
             min-height: 100vh;
         }
 
-        
+
         .main-content {
             margin-left: 280px;
             padding: 30px;
@@ -49,13 +112,13 @@ $headerSubtitle = "Manage room types and their descriptions.";
             min-height: 100vh;
         }
 
-        .sidebar.collapsed + .main-content {
+        .sidebar.collapsed+.main-content {
             margin-left: 80px;
         }
 
         .content-header {
             background: white;
-           padding: 0px 10px;
+            padding: 0px 10px;
             border-radius: 15px;
             box-shadow: 0 2px 20px rgba(139, 115, 85, 0.08);
             margin-top: -23px;
@@ -134,33 +197,34 @@ $headerSubtitle = "Manage room types and their descriptions.";
             background: #f8f6f3;
         }
 
-        
+
         /* Main content area - adjusted for sidebar */
         .main-content {
             flex: 1;
             padding: 30px;
-            margin-left: 250px; /* Adjust this based on your sidebar width */
+            margin-left: 250px;
+            /* Adjust this based on your sidebar width */
         }
-        
+
         .container {
             width: 50%;
-            max-width: 600px;
+            max-width: 1334px;
             margin: 0 auto;
         }
-        
+
         .card {
             background: var(--white);
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
-        
+
         .card-header {
             background: linear-gradient(to right, var(--primary-brown), var(--dark-brown));
             color: white;
             padding: 25px 30px;
         }
-        
+
         .card-title {
             font-size: 24px;
             font-weight: 600;
@@ -169,22 +233,22 @@ $headerSubtitle = "Manage room types and their descriptions.";
             gap: 12px;
             color: white;
         }
-        
+
         .card-body {
             padding: 30px;
         }
-        
+
         .form-group {
             margin-bottom: 25px;
         }
-        
+
         .form-label {
             font-weight: 500;
             color: var(--text-dark);
             margin-bottom: 8px;
             display: block;
         }
-        
+
         .form-control {
             width: 100%;
             padding: 14px 16px;
@@ -194,18 +258,18 @@ $headerSubtitle = "Manage room types and their descriptions.";
             font-size: 16px;
             transition: all 0.3s;
         }
-        
+
         .form-control:focus {
             outline: none;
             border-color: var(--primary-brown);
             box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.2);
         }
-        
+
         textarea.form-control {
             min-height: 120px;
             resize: vertical;
         }
-        
+
         .btn {
             padding: 14px 28px;
             border-radius: 6px;
@@ -215,26 +279,26 @@ $headerSubtitle = "Manage room types and their descriptions.";
             transition: all 0.3s;
             border: none;
         }
-        
+
         .btn-primary {
             background-color: var(--primary-brown);
             color: var(--white);
         }
-        
+
         .btn-primary:hover {
             background-color: var(--dark-brown);
         }
-        
+
         .btn-outline {
             background-color: transparent;
             border: 1px solid var(--border-color);
             color: var(--text-light);
         }
-        
+
         .btn-outline:hover {
             background-color: var(--light-gray);
         }
-        
+
         .form-actions {
             display: flex;
             gap: 15px;
@@ -243,7 +307,7 @@ $headerSubtitle = "Manage room types and their descriptions.";
             padding-top: 20px;
             border-top: 1px solid var(--border-color);
         }
-        
+
         /* Responsive adjustments */
         @media (max-width: 992px) {
             .main-content {
@@ -251,26 +315,27 @@ $headerSubtitle = "Manage room types and their descriptions.";
                 padding: 20px;
             }
         }
-        
+
         @media (max-width: 576px) {
             .card-body {
                 padding: 20px;
             }
-            
+
             .form-actions {
                 flex-direction: column;
             }
-            
+
             .btn {
                 width: 100%;
             }
         }
     </style>
 </head>
+
 <body>
     <?php include_once("sidebar.php"); ?>
 
-    
+
     <div class="main-content">
         <?php include_once("header-content.php"); ?>
         <div class="container">
@@ -281,21 +346,44 @@ $headerSubtitle = "Manage room types and their descriptions.";
                         Add Room Type
                     </h1>
                 </div>
-                
+
                 <div class="card-body">
+                    <?php if (!empty($success_message)): ?>
+                        <div
+                            style="padding:12px; background:#d4edda; color:#155724; border:1px solid #c3e6cb; border-radius:5px; margin-bottom:15px;">
+                            <?= $success_message ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (!empty($error_message)): ?>
+                        <div
+                            style="padding:12px; background:#f8d7da; color:#721c24; border:1px solid #f5c6cb; border-radius:5px; margin-bottom:15px;">
+                            <?= $error_message ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (!empty($warning_message)): ?>
+                        <div
+                            style="padding:12px; background:#fff3cd; color:#856404; border:1px solid #ffeeba; border-radius:5px; margin-bottom:15px;">
+                            <?= $warning_message ?>
+                        </div>
+                    <?php endif; ?>
+
                     <form method="POST" action="">
                         <input type="hidden" name="add_room_type" value="1">
-                        
+
                         <div class="form-group">
                             <label class="form-label">Room Type Name</label>
-                            <input type="text" class="form-control" name="room_type_name" placeholder="e.g. Deluxe, Suite, Standard" required>
+                            <input type="text" class="form-control" name="room_type_name"
+                                placeholder="e.g. Deluxe, Suite, Standard" required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label class="form-label">Description</label>
-                            <textarea class="form-control" rows="4" name="description" placeholder="Type description" required></textarea>
+                            <textarea class="form-control" rows="4" name="description" placeholder="Type description"
+                                required></textarea>
                         </div>
-                        
+
                         <div class="form-actions">
                             <button type="reset" class="btn btn-outline">Cancel</button>
                             <button type="submit" class="btn btn-primary">Add Room Type</button>
@@ -308,17 +396,17 @@ $headerSubtitle = "Manage room types and their descriptions.";
 
     <script>
         // Simple form validation
-        document.querySelector('form').addEventListener('submit', function(e) {
+        document.querySelector('form').addEventListener('submit', function (e) {
             const roomName = document.querySelector('input[name="room_type_name"]');
             const description = document.querySelector('textarea[name="description"]');
-            
+
             if (roomName.value.trim() === '') {
                 e.preventDefault();
                 alert('Please enter a room type name');
                 roomName.focus();
                 return;
             }
-            
+
             if (description.value.trim() === '') {
                 e.preventDefault();
                 alert('Please enter a description');
@@ -327,4 +415,5 @@ $headerSubtitle = "Manage room types and their descriptions.";
         });
     </script>
 </body>
+
 </html>
