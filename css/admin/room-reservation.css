@@ -1,0 +1,386 @@
+/* Room Reservation CSS */
+        /* Color Palette */
+        :root {
+            --primary: #8b7355;
+            --primary-light: #a58c6c;
+            --primary-dark: #76614a;
+            --accent: #5a4c3d;
+            --light: #f9f6f2;
+            --light-alt: #e8dfd1;
+            --dark: #333;
+            --gray: #666;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* ✅ Adjusted for sidebar */
+        .main-content {
+            margin-left: 260px;
+            /* match sidebar width */
+            padding: 20px 30px;
+            max-width: calc(100% - 260px);
+        }
+
+        header {
+            background: linear-gradient(to right, var(--primary), var(--primary-light));
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: var(--primary);
+            margin: 25px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-alt);
+        }
+
+
+        h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .staff-info {
+            background-color: var(--light-alt);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reservation-process {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .process-step {
+            text-align: center;
+            flex: 1;
+            position: relative;
+            z-index: 3;
+            cursor: pointer;
+        }
+
+        .process-step .circle {
+            width: 50px;
+            height: 50px;
+            background-color: var(--light-alt);
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+
+        .process-step.active .circle {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .process-step p {
+            font-weight: 500;
+            color: var(--primary);
+        }
+
+        .process-connector {
+            position: absolute;
+            top: 34px;
+            left: 5%;
+            right: 5%;
+            height: 6px;
+            background-color: var(--light-alt);
+            z-index: 1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .connector-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            transition: width 0.35s ease;
+        }
+
+        .form-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--light-alt);
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Ensure all select elements match input styles */
+        select.form-select {
+            appearance: none;
+            /* remove default arrow styling */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 12px 15px;
+            border: 2px solid var(--light-alt);
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: white;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D'10'%20height%3D'5'%20viewBox%3D'0%200%2010%205'%20xmlns%3D'http://www.w3.org/2000/svg'%3E%3Cpath%20d%3D'M0%200l5%205%205-5z'%20fill%3D'%23666'%20/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 10px 5px;
+            transition: border-color 0.3s;
+            cursor: pointer;
+        }
+
+        select.form-select:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        /* Optional: adjust invalid-feedback for selects */
+        select.form-select:invalid {
+            border-color: #e8dfd1;
+        }
+
+        .btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .facilities-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .facility-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .facility-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .facility-card.selected {
+            border: 3px solid var(--primary);
+        }
+
+        .facility-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .facility-img {
+            height: 180px;
+            background-color: var(--light-alt);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 2.5rem;
+        }
+
+        .facility-content {
+            padding: 20px;
+        }
+
+        .facility-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .facility-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin: 10px 0;
+        }
+
+        .facility-desc {
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .guest-summary {
+            background-color: var(--light-alt);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+
+        .guest-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            margin-bottom: 10px;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .selected-facilities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .facility-badge {
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            background-color: var(--light-alt);
+            color: var(--accent);
+            border-radius: 10px 10px 0 0;
+        }
+
+        /* small utility */
+        .small {
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .reservation-process {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .process-connector {
+                display: none;
+            }
+
+            .btn-container {
+                flex-direction: column;
+            }
+        }
