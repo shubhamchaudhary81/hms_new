@@ -25,6 +25,16 @@ if (!$result) {
 while ($row = $result->fetch_assoc()) {
     $roomTypes[] = $row;
 }
+
+// Fetch all extra services
+$sql = "SELECT * FROM ExtraServices";
+$result = $conn->query($sql);
+$services = [];
+if ($result && $result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $services[] = $row;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -235,99 +245,21 @@ while ($row = $result->fetch_assoc()) {
             <p>Click on facilities to add them to the guest's reservation</p>
 
             <div class="facilities-section">
-                <div class="facility-card" data-facility="pool" data-price="0">
-                    <div class="facility-img">
-                        <i class="fas fa-swimming-pool"></i>
+                <?php foreach ($services as $service): ?>
+                    <div class="facility-card" data-service="<?= htmlspecialchars($service['service_name']) ?>"
+                        data-price="<?= htmlspecialchars($service['price']) ?>">
+                        <div class="facility-img">
+                            <i class="fas fa-concierge-bell"></i> <!-- Default icon, change if needed -->
+                        </div>
+                        <div class="facility-content">
+                            <h3 class="facility-title"><?= htmlspecialchars($service['service_name']) ?></h3>
+                            <div class="facility-price">
+                                <?= $service['price'] == 0 ? 'Complimentary for guests' : 'From Rs.' . htmlspecialchars($service['price']) ?>
+                            </div>
+                            <p class="facility-desc"><?= htmlspecialchars($service['description']) ?></p>
+                        </div>
                     </div>
-                    <div class="facility-content">
-                        <h3 class="facility-title">Infinity Pool</h3>
-                        <div class="facility-price">Complimentary for guests</div>
-                        <p class="facility-desc">Enjoy our stunning infinity pool with panoramic views of the city
-                            skyline.</p>
-                    </div>
-                </div>
-
-                <div class="facility-card" data-facility="spa" data-price="85">
-                    <div class="facility-img">
-                        <i class="fas fa-spa"></i>
-                    </div>
-                    <div class="facility-content">
-                        <h3 class="facility-title">Luxury Spa</h3>
-                        <div class="facility-price">From $85 per treatment</div>
-                        <p class="facility-desc">Relax and rejuvenate with our wide range of spa treatments and
-                            therapies.</p>
-                    </div>
-                </div>
-
-                <div class="facility-card" data-facility="gym" data-price="0">
-                    <div class="facility-img">
-                        <i class="fas fa-dumbbell"></i>
-                    </div>
-                    <div class="facility-content">
-                        <h3 class="facility-title">Fitness Center</h3>
-                        <div class="facility-price">Complimentary for guests</div>
-                        <p class="facility-desc">State-of-the-art fitness equipment available 24/7 for your convenience.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="facility-card" data-facility="dining" data-price="35">
-                    <div class="facility-img">
-                        <i class="fas fa-utensils"></i>
-                    </div>
-                    <div class="facility-content">
-                        <h3 class="facility-title">Fine Dining</h3>
-                        <div class="facility-price">From $35 per person</div>
-                        <p class="facility-desc">Experience gourmet cuisine at our award-winning restaurant.</p>
-                    </div>
-                </div>
-
-                <div class="facility-card" data-facility="concierge" data-price="0">
-                    <div class="facility-img">
-                        <i class="fas fa-concierge-bell"></i>
-                    </div>
-                    <div class="facility-content">
-                        <h3 class="facility-title">Concierge Service</h3>
-                        <div class="facility-price">Complimentary for guests</div>
-                        <p class="facility-desc">Our concierge team is available to assist with all your needs and
-                            arrangements.</p>
-                    </div>
-                </div>
-
-                <div class="facility-card" data-facility="wifi" data-price="0">
-                    <div class="facility-img">
-                        <i class="fas fa-wifi"></i>
-                    </div>
-                    <div class="facility-content">
-                        <h3 class="facility-title">High-Speed WiFi</h3>
-                        <div class="facility-price">Complimentary for guests</div>
-                        <p class="facility-desc">Stay connected with our high-speed internet access throughout the
-                            hotel.</p>
-                    </div>
-                </div>
-
-                <div class="facility-card" data-facility="parking" data-price="25">
-                    <div class="facility-img">
-                        <i class="fas fa-parking"></i>
-                    </div>
-                    <div class="facility-content">
-                        <h3 class="facility-title">Valet Parking</h3>
-                        <div class="facility-price">$25 per day</div>
-                        <p class="facility-desc">Secure valet parking service with in-and-out privileges.</p>
-                    </div>
-                </div>
-
-                <div class="facility-card" data-facility="business" data-price="50">
-                    <div class="facility-img">
-                        <i class="fas fa-laptop"></i>
-                    </div>
-                    <div class="facility-content">
-                        <h3 class="facility-title">Business Center</h3>
-                        <div class="facility-price">$50 per day access</div>
-                        <p class="facility-desc">Fully equipped business center with meeting rooms and printing
-                            services.</p>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
 
             <div class="btn-container">
@@ -521,50 +453,186 @@ while ($row = $result->fetch_assoc()) {
             goToStep(1);
         }
 
-        // Facility selection
-        const facilityCards = document.querySelectorAll('.facility-card');
-        const selectedFacilities = new Set();
+        //Location Province district and city
+        
+        // Room type and number dynamic loading
+        document.getElementById('room-type').addEventListener('change', function () {
+            let typeId = this.value;
+            let roomNumberSelect = document.getElementById('room-number');
 
-        facilityCards.forEach(card => {
+            // Clear previous options
+            roomNumberSelect.innerHTML = '<option value="">Loading...</option>';
+
+            if (typeId) {
+                fetch('get_rooms.php?room_type_id=' + typeId)
+                    .then(response => response.json())
+                    .then(data => {
+                        roomNumberSelect.innerHTML = '<option value="">Select Room Number</option>';
+                        if (data.length > 0) {
+                            data.forEach(room => {
+                                let option = document.createElement('option');
+                                option.value = room.room_id;
+                                option.textContent = room.room_number;
+                                roomNumberSelect.appendChild(option);
+                            });
+                        } else {
+                            roomNumberSelect.innerHTML = '<option value="">No Rooms Available</option>';
+                        }
+                    });
+            } else {
+                roomNumberSelect.innerHTML = '<option value="">Select Room Number</option>';
+            }
+        });
+
+        // // Facility selection
+        // const facilityCards = document.querySelectorAll('.facility-card');
+        // const selectedFacilities = new Set();
+
+        // facilityCards.forEach(card => {
+        //     card.addEventListener('click', function () {
+        //         this.classList.toggle('selected');
+        //         const facility = this.getAttribute('data-facility');
+
+        //         if (selectedFacilities.has(facility)) {
+        //             selectedFacilities.delete(facility);
+        //         } else {
+        //             selectedFacilities.add(facility);
+        //         }
+
+        //         updateSelectedFacilities();
+        //     });
+        // });
+
+        // // Update selected facilities list
+        // function updateSelectedFacilities() {
+        //     const facilitiesList = document.getElementById('selected-facilities-list');
+        //     facilitiesList.innerHTML = '';
+
+        //     if (selectedFacilities.size === 0) {
+        //         facilitiesList.innerHTML = '<div class="facility-badge"><span>No facilities selected yet</span></div>';
+        //         document.getElementById('summary-charges').textContent = '$0';
+        //     } else {
+        //         let totalCharges = 0;
+
+        //         selectedFacilities.forEach(facility => {
+        //             const card = document.querySelector(`[data-facility="${facility}"]`);
+        //             const name = card.querySelector('.facility-title').textContent;
+        //             const price = parseInt(card.getAttribute('data-price')) || 0;
+
+        //             totalCharges += price;
+
+        //             const badge = document.createElement('div');
+        //             badge.className = 'facility-badge';
+        //             badge.innerHTML = `<span>${name}</span> <small class="small">${price > 0 ? '$' + price : 'Complimentary'}</small>`;
+        //             facilitiesList.appendChild(badge);
+        //         });
+
+        //         document.getElementById('summary-charges').textContent = '$' + totalCharges;
+        //     }
+        // }
+
+        // // Update reservation summary
+        // function updateSummary() {
+        //     const firstName = document.getElementById('first-name').value;
+        //     const lastName = document.getElementById('last-name').value;
+        //     const email = document.getElementById('email').value;
+        //     const phone = document.getElementById('phone').value;
+        //     const checkIn = document.getElementById('check-in').value;
+        //     const checkOut = document.getElementById('check-out').value;
+        //     const guests = document.getElementById('guests').value;
+        //     const roomType = document.getElementById('room-type').value;
+
+        //     if (firstName && lastName) {
+        //         document.getElementById('summary-name').textContent = `${firstName} ${lastName}`;
+        //     } else {
+        //         document.getElementById('summary-name').textContent = 'Not provided yet';
+        //     }
+
+        //     if (email || phone) {
+        //         document.getElementById('summary-contact').textContent = `${email} | ${phone}`;
+        //     } else {
+        //         document.getElementById('summary-contact').textContent = 'Not provided yet';
+        //     }
+
+        //     if (checkIn && checkOut) {
+        //         document.getElementById('summary-dates').textContent = `${checkIn} to ${checkOut}`;
+        //     } else {
+        //         document.getElementById('summary-dates').textContent = 'Not selected yet';
+        //     }
+
+        //     if (guests) {
+        //         document.getElementById('summary-guests').textContent = `${guests} Guest${guests > 1 ? 's' : ''}`;
+        //     } else {
+        //         document.getElementById('summary-guests').textContent = 'Not specified yet';
+        //     }
+
+        //     if (roomType) {
+        //         const roomText = document.getElementById('room-type').options[document.getElementById('room-type').selectedIndex].text;
+        //         document.getElementById('summary-room').textContent = roomText;
+        //     } else {
+        //         document.getElementById('summary-room').textContent = 'Not selected yet';
+        //     }
+
+        //     // ensure facilities list updated and charges displayed
+        //     updateSelectedFacilities();
+        // }
+
+        // // Complete reservation
+        // document.getElementById('complete-reservation').addEventListener('click', function () {
+        //     // final validation
+        //     if (!validateStep(3)) return;
+
+        //     // you can replace this with an AJAX call to save reservation to server
+        //     alert('Reservation completed successfully!');
+        //     // optionally clear form or go back to step 1
+        //     // clearForm();
+        // });
+
+        // new facility selection
+        // Extra Service selection
+        const serviceCards = document.querySelectorAll('.facility-card'); // cards still have facility-card class
+        const selectedServices = new Set();
+
+        serviceCards.forEach(card => {
             card.addEventListener('click', function () {
                 this.classList.toggle('selected');
-                const facility = this.getAttribute('data-facility');
+                const service = this.getAttribute('data-service');
 
-                if (selectedFacilities.has(facility)) {
-                    selectedFacilities.delete(facility);
+                if (selectedServices.has(service)) {
+                    selectedServices.delete(service);
                 } else {
-                    selectedFacilities.add(facility);
+                    selectedServices.add(service);
                 }
 
-                updateSelectedFacilities();
+                updateSelectedServices();
             });
         });
 
-        // Update selected facilities list
-        function updateSelectedFacilities() {
-            const facilitiesList = document.getElementById('selected-facilities-list');
-            facilitiesList.innerHTML = '';
+        // Update selected services list
+        function updateSelectedServices() {
+            const servicesList = document.getElementById('selected-facilities-list'); // same list ID
+            servicesList.innerHTML = '';
 
-            if (selectedFacilities.size === 0) {
-                facilitiesList.innerHTML = '<div class="facility-badge"><span>No facilities selected yet</span></div>';
+            if (selectedServices.size === 0) {
+                servicesList.innerHTML = '<div class="facility-badge"><span>No services selected yet</span></div>';
                 document.getElementById('summary-charges').textContent = '$0';
             } else {
                 let totalCharges = 0;
 
-                selectedFacilities.forEach(facility => {
-                    const card = document.querySelector(`[data-facility="${facility}"]`);
+                selectedServices.forEach(service => {
+                    const card = document.querySelector(`[data-service="${service}"]`);
                     const name = card.querySelector('.facility-title').textContent;
-                    const price = parseInt(card.getAttribute('data-price')) || 0;
+                    const price = parseFloat(card.getAttribute('data-price')) || 0;
 
                     totalCharges += price;
 
                     const badge = document.createElement('div');
                     badge.className = 'facility-badge';
                     badge.innerHTML = `<span>${name}</span> <small class="small">${price > 0 ? '$' + price : 'Complimentary'}</small>`;
-                    facilitiesList.appendChild(badge);
+                    servicesList.appendChild(badge);
                 });
 
-                document.getElementById('summary-charges').textContent = '$' + totalCharges;
+                document.getElementById('summary-charges').textContent = '$' + totalCharges.toFixed(2);
             }
         }
 
@@ -579,39 +647,14 @@ while ($row = $result->fetch_assoc()) {
             const guests = document.getElementById('guests').value;
             const roomType = document.getElementById('room-type').value;
 
-            if (firstName && lastName) {
-                document.getElementById('summary-name').textContent = `${firstName} ${lastName}`;
-            } else {
-                document.getElementById('summary-name').textContent = 'Not provided yet';
-            }
+            document.getElementById('summary-name').textContent = firstName && lastName ? `${firstName} ${lastName}` : 'Not provided yet';
+            document.getElementById('summary-contact').textContent = email || phone ? `${email} | ${phone}` : 'Not provided yet';
+            document.getElementById('summary-dates').textContent = checkIn && checkOut ? `${checkIn} to ${checkOut}` : 'Not selected yet';
+            document.getElementById('summary-guests').textContent = guests ? `${guests} Guest${guests > 1 ? 's' : ''}` : 'Not specified yet';
+            document.getElementById('summary-room').textContent = roomType ? document.getElementById('room-type').options[document.getElementById('room-type').selectedIndex].text : 'Not selected yet';
 
-            if (email || phone) {
-                document.getElementById('summary-contact').textContent = `${email} | ${phone}`;
-            } else {
-                document.getElementById('summary-contact').textContent = 'Not provided yet';
-            }
-
-            if (checkIn && checkOut) {
-                document.getElementById('summary-dates').textContent = `${checkIn} to ${checkOut}`;
-            } else {
-                document.getElementById('summary-dates').textContent = 'Not selected yet';
-            }
-
-            if (guests) {
-                document.getElementById('summary-guests').textContent = `${guests} Guest${guests > 1 ? 's' : ''}`;
-            } else {
-                document.getElementById('summary-guests').textContent = 'Not specified yet';
-            }
-
-            if (roomType) {
-                const roomText = document.getElementById('room-type').options[document.getElementById('room-type').selectedIndex].text;
-                document.getElementById('summary-room').textContent = roomText;
-            } else {
-                document.getElementById('summary-room').textContent = 'Not selected yet';
-            }
-
-            // ensure facilities list updated and charges displayed
-            updateSelectedFacilities();
+            // Ensure services list updated and charges displayed
+            updateSelectedServices();
         }
 
         // Complete reservation
@@ -619,11 +662,10 @@ while ($row = $result->fetch_assoc()) {
             // final validation
             if (!validateStep(3)) return;
 
-            // you can replace this with an AJAX call to save reservation to server
+            // AJAX or server call to save reservation can be added here
             alert('Reservation completed successfully!');
-            // optionally clear form or go back to step 1
-            // clearForm();
         });
+
 
         // initialize
         updateProcess();
@@ -763,33 +805,33 @@ while ($row = $result->fetch_assoc()) {
             }
         });
 
-        document.getElementById('room-type').addEventListener('change', function () {
-            let typeId = this.value;
-            let roomNumberSelect = document.getElementById('room-number');
+        // document.getElementById('room-type').addEventListener('change', function () {
+        //     let typeId = this.value;
+        //     let roomNumberSelect = document.getElementById('room-number');
 
-            // Clear previous options
-            roomNumberSelect.innerHTML = '<option value="">Loading...</option>';
+        //     // Clear previous options
+        //     roomNumberSelect.innerHTML = '<option value="">Loading...</option>';
 
-            if (typeId) {
-                fetch('get_rooms.php?room_type_id=' + typeId)
-                    .then(response => response.json())
-                    .then(data => {
-                        roomNumberSelect.innerHTML = '<option value="">Select Room Number</option>';
-                        if (data.length > 0) {
-                            data.forEach(room => {
-                                let option = document.createElement('option');
-                                option.value = room.room_id;
-                                option.textContent = room.room_number;
-                                roomNumberSelect.appendChild(option);
-                            });
-                        } else {
-                            roomNumberSelect.innerHTML = '<option value="">No Rooms Available</option>';
-                        }
-                    });
-            } else {
-                roomNumberSelect.innerHTML = '<option value="">Select Room Number</option>';
-            }
-        });
+        //     if (typeId) {
+        //         fetch('get_rooms.php?room_type_id=' + typeId)
+        //             .then(response => response.json())
+        //             .then(data => {
+        //                 roomNumberSelect.innerHTML = '<option value="">Select Room Number</option>';
+        //                 if (data.length > 0) {
+        //                     data.forEach(room => {
+        //                         let option = document.createElement('option');
+        //                         option.value = room.room_id;
+        //                         option.textContent = room.room_number;
+        //                         roomNumberSelect.appendChild(option);
+        //                     });
+        //                 } else {
+        //                     roomNumberSelect.innerHTML = '<option value="">No Rooms Available</option>';
+        //                 }
+        //             });
+        //     } else {
+        //         roomNumberSelect.innerHTML = '<option value="">Select Room Number</option>';
+        //     }
+        // });
     </script>
 </body>
 

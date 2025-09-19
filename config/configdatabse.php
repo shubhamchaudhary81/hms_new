@@ -432,3 +432,17 @@ if ($conn->query($create_staffs_table) === TRUE) {
 } else {
     // echo "Error creating 'Reviews' table: " . $conn->error . "<br>";
 }  
+
+// Create ExtraServices table
+$create_extra_services_table = "CREATE TABLE IF NOT EXISTS ExtraServices (
+    service_id INT PRIMARY KEY AUTO_INCREMENT,
+    service_name VARCHAR(100) NOT NULL,
+    description TEXT,
+    price DECIMAL(10, 2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+if ($conn->query($create_extra_services_table) === TRUE) {
+    // echo "Table 'ExtraServices' created successfully<br>";
+} else {
+    // echo "Error creating 'ExtraServices' table: " . $conn->error . "<br>";
+}

@@ -347,6 +347,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="add-extra-service.php" class="nav-link sub-link">
+                    <i class="fas fa-concierge-bell"></i>
+                    <span>Add Extra Service</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="add-amenities.php" class="nav-link sub-link">
                     <i class="fas fa-star"></i>
                     <span>Add Amenities</span>
