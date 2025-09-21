@@ -3,8 +3,8 @@ session_start();
 if ($_SESSION['admin_id'] == "" || $_SESSION['admin_name'] == "") {
     header("Location: ../login.php");
     exit();
-} 
- include '../include/admin/header.php'; 
+}
+include '../include/admin/header.php';
 $headerTitle = "Room Management";
 $headerSubtitle = "Manage room availability, status, and maintenance schedules.";
 $buttonText = "Add New Room";
@@ -13,6 +13,89 @@ $showButton = true;
 
 // Database connection
 include_once '../config/configdatabse.php';
+
+// logic and swal message to delete room
+// if (isset($_GET['delete_room'])) {
+//     $roomId = intval($_GET['delete_room']); // sanitize input
+
+//     $sql = "DELETE FROM Room WHERE room_id = ?";
+//     $stmt = $conn->prepare($sql);
+//     $stmt->bind_param("i", $roomId);
+
+//     if ($stmt->execute()) {
+//         // Success toast
+//         echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+//         <script>
+//         Swal.fire({
+//             toast: true,
+//             position: 'top-end',
+//             icon: 'success',
+//             title: 'Room deleted successfully',
+//             showConfirmButton: false,
+//             timer: 3000,
+//             timerProgressBar: true,
+//             background: '#ffffff',
+//             iconColor: '#80694A'
+//         }).then(() => {
+//             window.location.href = 'rooms.php';
+//         });
+//         </script>";
+//     } else {
+//         // Error toast
+//         echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
+//         <script>
+//         Swal.fire({
+//             toast: true,
+//             position: 'top-end',
+//             icon: 'error',
+//             title: 'Failed to delete room',
+//             showConfirmButton: false,
+//             timer: 3000,
+//             timerProgressBar: true,
+//             background: '#ffffff',
+//             iconColor: '#80694A'
+//         });
+//         </script>";
+//     }
+
+//     // $stmt->close();
+// }
+if (isset($_GET['delete_room'])) {
+    $roomId = intval($_GET['delete_room']);
+    $stmt = $conn->prepare("DELETE FROM Room WHERE room_id = ?");
+    $stmt->bind_param("i", $roomId);
+
+    if ($stmt->execute()) {
+        echo "<script>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'success',
+                title: 'Room deleted successfully',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                iconColor: '#80694A'
+            }).then(() => { window.location.href = 'rooms.php'; });
+        </script>";
+    } else {
+        echo "<script>
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'error',
+                title: 'Failed to delete room',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                iconColor: '#80694A'
+            });
+        </script>";
+    }
+    $stmt->close();
+}
+
+
 
 // Get total number of rooms
 $total_rooms_result = $conn->query("SELECT COUNT(*) as total FROM Room");
@@ -46,8 +129,8 @@ ORDER BY r.room_number";
 $roomsResult = $conn->query($roomsQuery);
 $rooms = [];
 
-if($roomsResult && $roomsResult->num_rows > 0) {
-    while($row = $roomsResult->fetch_assoc()) {
+if ($roomsResult && $roomsResult->num_rows > 0) {
+    while ($row = $roomsResult->fetch_assoc()) {
         // Get amenities for this room
         $amenity_sql = "SELECT a.amenity_name FROM RoomAmenity ra 
                         JOIN Amenity a ON ra.amenity_id = a.amenity_id 
@@ -68,8 +151,8 @@ if($roomsResult && $roomsResult->num_rows > 0) {
 $roomTypesQuery = "SELECT room_type_id, room_type_name FROM RoomType ORDER BY room_type_name";
 $roomTypesResult = $conn->query($roomTypesQuery);
 $roomTypes = [];
-if($roomTypesResult && $roomTypesResult->num_rows > 0) {
-    while($row = $roomTypesResult->fetch_assoc()) {
+if ($roomTypesResult && $roomTypesResult->num_rows > 0) {
+    while ($row = $roomTypesResult->fetch_assoc()) {
         $roomTypes[] = $row;
     }
 }
@@ -79,7 +162,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
 <body>
     <?php include 'sidebar.php'; ?>
     <div class="main-content">
-        <?php include 'header-content.php'?>
+        <?php include 'header-content.php' ?>
 
         <!-- Statistics Cards -->
         <div class="stats-cards">
@@ -144,17 +227,17 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
                                         <?php
                                         $imageFile = $room['image'] ?? '';
                                         $imgSrc = '../assets/images/hotel.jpg'; // Default fallback
-                                        
+                                    
                                         if (!empty($imageFile)) {
                                             $roomImagePath = '../uploads/room_images/' . $imageFile;
                                             $fullImagePath = __DIR__ . '/../uploads/room_images/' . $imageFile;
-                                            
+
                                             if (file_exists($fullImagePath)) {
                                                 $imgSrc = $roomImagePath;
                                             } else {
                                                 $assetsImagePath = '../assets/images/' . $imageFile;
                                                 $fullAssetsPath = __DIR__ . '/../assets/images/' . $imageFile;
-                                                
+
                                                 if (file_exists($fullAssetsPath)) {
                                                     $imgSrc = $assetsImagePath;
                                                 } else {
@@ -183,10 +266,9 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
                                             }
                                         }
                                         ?>
-                                        <img src="<?= htmlspecialchars($imgSrc) ?>" 
-                                             class="room-image" 
-                                             alt="Room <?= $room['room_number'] ?>"
-                                             onerror="this.src='../assets/images/hotel.jpg'">
+                                        <img src="<?= htmlspecialchars($imgSrc) ?>" class="room-image"
+                                            alt="Room <?= $room['room_number'] ?>"
+                                            onerror="this.src='../assets/images/hotel.jpg'">
                                         <div class="room-details">
                                             <h6>Room <?= htmlspecialchars($room['room_number']) ?></h6>
                                             <p>Floor <?= htmlspecialchars($room['floor_number'] ?? 'N/A') ?></p>
@@ -197,24 +279,32 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
                                     <div class="room-details">
                                         <h6><?= htmlspecialchars($room['room_type_name']) ?></h6>
                                         <p><?= htmlspecialchars($room['type_description'] ?? 'Luxury accommodation') ?></p>
-                                        <small class="text-muted">Capacity: <?= htmlspecialchars($room['capacity'] ?? 'N/A') ?> guests</small>
+                                        <small class="text-muted">Capacity:
+                                            <?= htmlspecialchars($room['capacity'] ?? 'N/A') ?> guests</small>
                                     </div>
                                 </td>
                                 <td>
                                     <?php
-                                        $status = strtolower($room['status']);
-                                        $statusClass = 'status-available';
-                                        $statusIcon = 'fas fa-check-circle';
-                                        if ($status == 'booked' || $status == 'occupied') {
-                                            $statusClass = 'status-occupied';
-                                            $statusIcon = 'fas fa-exclamation-circle';
-                                        } elseif ($status == 'maintenance') {
-                                            $statusClass = 'status-OutOfOrder';
-                                            $statusIcon = 'fas fa-tools';
-                                        }
+                                    $status = strtolower($room['status']);
+                                    $statusClass = 'status-available';
+                                    $statusIcon = 'fas fa-check-circle';
+                                    if ($status == 'booked' || $status == 'occupied') {
+                                        $statusClass = 'status-occupied';
+                                        $statusIcon = 'fas fa-exclamation-circle';
+                                    } elseif ($status == 'maintenance') {
+                                        $statusClass = 'status-OutOfOrder';
+                                        $statusIcon = 'fas fa-tools';
+                                    }
                                     ?>
                                     <span class="status-badge <?= $statusClass ?>">
-                                        <i class="<?= $statusIcon ?> me-1"></i><?= ucfirst($room['status']) ?>
+                                        <i class="<?= $statusIcon ?> me-1"></i>
+                                        <?php
+                                        if (ucfirst($room['status']) == "Maintenance") {
+                                            echo "Out of Order";
+                                        } else {
+                                            echo ucfirst($room['status']);
+                                        }
+                                        ?>
                                     </span>
                                 </td>
                                 <td>
@@ -237,18 +327,32 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
                                 </td>
                                 <td>
                                     <div class="action-buttons">
-                                        <button class="btn-action btn-view" onclick="viewRoom(<?= $room['room_id'] ?>)" title="View Details">
+                                        <button class="btn-action btn-view" onclick="viewRoom(<?= $room['room_id'] ?>)"
+                                            title="View Details">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button class="btn-action btn-edit" onclick="editRoom(<?= $room['room_id'] ?>)" title="Edit Room">
+                                        <button class="btn-action btn-edit" onclick="editRoom(<?= $room['room_id'] ?>)"
+                                            title="Edit Room">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button class="btn-action btn-status" onclick="updateStatus(<?= $room['room_id'] ?>)" title="Update Status">
+                                        <button class="btn-action btn-status"
+                                            onclick="updateStatus(<?= $room['room_id'] ?>)" title="Update Status">
                                             <i class="fas fa-cog"></i>
                                         </button>
-                                        <button class="btn-action btn-delete" onclick="deleteRoom(<?= $room['room_id'] ?>)" title="Delete Room">
+                                        <!-- <button class="btn-action btn-delete" onclick="deleteRoom(<?= $room['room_id'] ?>)"
+                                            title="Delete Room">
                                             <i class="fas fa-trash"></i>
+                                        </button> -->
+                                        <!-- Your Delete Button -->
+                                        <!-- <button class="btn-action btn-delete" onclick="deleteRoom(<?= $room['room_id'] ?>)"
+                                            title="Delete Room">
+                                            <i class="fas fa-trash"></i>
+                                        </button> -->
+                                        <button class="btn-action btn-delete"
+                                            onclick="window.location.href='delete.php?delete_room=<?= $room['room_id'] ?>'">
+                                            Delete Room
                                         </button>
+
                                     </div>
                                 </td>
                             </tr>
@@ -270,12 +374,12 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             const roomRows = document.querySelectorAll('.room-row');
             const filterIndicator = document.getElementById('filterIndicator');
             const currentFilterText = document.getElementById('currentFilter');
-            
+
             // Update active state of stat cards
             document.querySelectorAll('.filter-card').forEach(card => {
                 card.classList.remove('active');
             });
-            
+
             const activeCard = document.querySelector(`[data-filter="${status}"]`);
             if (activeCard) {
                 activeCard.classList.add('active');
@@ -299,7 +403,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
                     filterName = 'Occupied Rooms';
                 } else if (status === 'maintenance' && rowStatus === 'maintenance') {
                     shouldShow = true;
-                    filterName = 'Maintenance Rooms';
+                    filterName = 'OutofOrder Rooms';
                 }
 
                 if (shouldShow) {
@@ -342,11 +446,11 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
         }
 
         // Add click event listeners to stat cards
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const filterCards = document.querySelectorAll('.filter-card');
-            
+
             filterCards.forEach(card => {
-                card.addEventListener('click', function() {
+                card.addEventListener('click', function () {
                     const filter = this.getAttribute('data-filter');
                     filterRooms(filter);
                 });
@@ -380,22 +484,22 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             }
         }
 
-        function deleteRoom(roomId) {
-            const room = roomsData.find(r => r.room_id == roomId);
-            if (room) {
-                const roomNumber = room.room_number;
-                if (confirm(`Are you sure you want to delete Room ${roomNumber}? This action cannot be undone.`)) {
-                    // Show loading state
-                    const deleteBtn = event.target.closest('.btn-delete');
-                    const originalContent = deleteBtn.innerHTML;
-                    deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-                    deleteBtn.disabled = true;
-                    
-                    // Redirect to delete page
-                    window.location.href = `rooms.php?delete_room=${roomId}`;
-                }
-            }
-        }
+        // function deleteRoom(roomId) {
+        //     const room = roomsData.find(r => r.room_id == roomId);
+        //     if (room) {
+        //         const roomNumber = room.room_number;
+        //         if (confirm(`Are you sure you want to delete Room ${roomNumber}? This action cannot be undone.`)) {
+        //             // Show loading state
+        //             const deleteBtn = event.target.closest('.btn-delete');
+        //             const originalContent = deleteBtn.innerHTML;
+        //             deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        //             deleteBtn.disabled = true;
+
+        //             // Redirect to delete page
+        //             window.location.href = `rooms.php?delete_room=${roomId}`;
+        //         }
+        //     }
+        // }
 
         function showRoomDetailsModal(room) {
             const modal = document.createElement('div');
@@ -492,7 +596,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
                                     <option value="">Select Status</option>
                                     <option value="available" ${room.status === 'available' ? 'selected' : ''}>Available</option>
                                     <option value="booked" ${room.status === 'booked' ? 'selected' : ''}>Booked</option>
-                                    <option value="maintenance" ${room.status === 'maintenance' ? 'selected' : ''}>Maintenance</option>
+                                    <option value="maintenance" ${room.status === 'maintenance' ? 'selected' : ''}>Out-of-Order</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -533,9 +637,9 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             const xhr = new XMLHttpRequest();
             xhr.open('POST', 'update_room_status.php', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            
-            xhr.onload = function() {
-                if (xhr.status === 200  ) {
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
                     try {
                         const response = JSON.parse(xhr.responseText);
                         if (response.success) {
@@ -560,7 +664,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
                 }
             };
 
-            xhr.onerror = function() {
+            xhr.onerror = function () {
                 showNotification('Network error occurred', 'error');
                 submitBtn.innerHTML = originalContent;
                 submitBtn.disabled = false;
@@ -630,7 +734,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
                                     <select id="status" name="status" required>
                                         <option value="available" ${room.status === 'available' ? 'selected' : ''}>Available</option>
                                         <option value="booked" ${room.status === 'booked' ? 'selected' : ''}>Booked</option>
-                                        <option value="maintenance" ${room.status === 'maintenance' ? 'selected' : ''}>Maintenance</option>
+                                        <option value="maintenance" ${room.status === 'maintenance' ? 'selected' : ''}>Out-of-Order</option>
                                     </select>
                                 </div>
                             </div>
@@ -659,7 +763,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             event.preventDefault();
             const form = event.target;
             const formData = new FormData(form);
-            
+
             // Add room_id to the form data
             formData.append('room_id', roomId);
 
@@ -673,8 +777,8 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             const xhr = new XMLHttpRequest();
             xhr.open('POST', 'update_room.php', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            
-            xhr.onload = function() {
+
+            xhr.onload = function () {
                 if (xhr.status === 200) {
                     try {
                         const response = JSON.parse(xhr.responseText);
@@ -700,7 +804,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
                 }
             };
 
-            xhr.onerror = function() {
+            xhr.onerror = function () {
                 showNotification('Network error occurred', 'error');
                 submitBtn.innerHTML = originalContent;
                 submitBtn.disabled = false;
@@ -723,7 +827,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
         }
 
         function enableOverlayClickToClose(modalOverlay) {
-            modalOverlay.addEventListener('click', function(event) {
+            modalOverlay.addEventListener('click', function (event) {
                 if (event.target === modalOverlay) {
                     closeModal(modalOverlay);
                 }
@@ -881,7 +985,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             font-weight: 700;
             color: white;
             margin: 0;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .table {
@@ -984,7 +1088,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -996,7 +1100,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: left 0.5s ease;
         }
 
@@ -1059,7 +1163,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             justify-content: center;
             min-width: 40px;
             height: 40px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -1071,7 +1175,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: left 0.5s ease;
         }
 
@@ -1167,15 +1271,15 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
                 margin-left: 0;
                 padding: 20px;
             }
-            
+
             .stats-cards {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
+
             .action-buttons {
                 flex-direction: column;
             }
-            
+
             .table-responsive {
                 font-size: 0.875rem;
             }
@@ -1219,7 +1323,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             max-width: 600px;
             width: 90%;
             max-height: 90vh;
-            overflow-y: auto;
+            overflow: hidden;
             transform: scale(0.9);
             transition: transform 0.3s ease;
         }
@@ -1229,7 +1333,7 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
         }
 
         .modal-header {
-            padding: 1.5rem 2rem;
+            padding: 0.5rem 2rem;
             border-bottom: 1px solid #f0ebe4;
             display: flex;
             justify-content: space-between;
@@ -1300,13 +1404,13 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             display: block;
             font-weight: 600;
             color: #5a4a3a;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
         }
 
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.4rem;
             border: 1px solid #e5d9cc;
             border-radius: 0.5rem;
             font-size: 0.875rem;
@@ -1463,5 +1567,30 @@ if($roomTypesResult && $roomTypesResult->num_rows > 0) {
             background: #f0ebe4;
         }
     </style>
+    <script>
+        function deleteRoom(roomId) {
+            Swal.fire({
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "This will delete the room permanently.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#80694A',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Yes, delete it!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // This code runs only when confirmed
+                        window.location.href = `rooms.php?delete_room=${roomId}`;
+                    }
+                });
+
+            
+        )
+        };
+    </script>
+
 </body>
+
 </html>

@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Fields
     $room_number = $_POST['room_number'];
-    $room_name = $_POST['room_name'];
+    // $room_name = $_POST['room_name'];
     $room_type = (int)$_POST['room_type_id'];
     $price_per_night = (float)$_POST['price_per_night'];
     $status = "Available"; // default
@@ -46,17 +46,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $image = $targetFile;
 
     $sql = "INSERT INTO room 
-        (room_number, room_name, room_type, price_per_night, status, floor_number, description, weekend_price, season_price, capacity, image)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        (room_number, room_type, price_per_night, status, floor_number, description, weekend_price, season_price, capacity, image)
+        VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
         die("Prepare failed: " . $conn->error);
     }
 
     $stmt->bind_param(
-        "ssidsisdids",
+        "sidsisdids",
         $room_number,
-        $room_name,
         $room_type,
         $price_per_night,
         $status,
@@ -660,10 +659,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label class="form-label">Room Number</label>
         <input type="number" class="form-control" name="room_number" placeholder="Enter room number" required>
     </div>
-    <div class="col-md-6">
+    <!-- <div class="col-md-6">
         <label class="form-label">Room Name</label>
         <input type="text" class="form-control" name="room_name" placeholder="Enter room name" required>
-    </div>
+    </div> -->
     <div class="col-md-6">
         <label class="form-label">Room Type</label>
         <select name="room_type_id" class="form-control" required>
@@ -815,7 +814,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p><strong>Room Number:</strong> <span id="review-room-number"></span></p>
-                                        <p><strong>Room Name:</strong> <span id="review-room-name"></span></p>
+                                        <!-- <p><strong>Room Name:</strong> <span id="review-room-name"></span></p> -->
                                         <p><strong>Room Type:</strong> <span id="review-room-type"></span></p>
                                         <p><strong>Floor:</strong> <span id="review-floor"></span></p>
                                         <p><strong>Status:</strong> Available</p>
@@ -947,7 +946,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (step === 1) {
                     const requiredFields = [
                         document.querySelector('[name="room_number"]'),
-                        document.querySelector('[name="room_name"]'),
+                        // document.querySelector('[name="room_name"]'),
                         document.querySelector('[name="room_type_id"]'),
                         document.querySelector('[name="floor_number"]'),
                         // document.querySelector('[name="status"]')
@@ -983,7 +982,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             function updateReviewSection() {
                 // Basic info
                 document.getElementById('review-room-number').textContent = document.querySelector('[name="room_number"]').value;
-                document.getElementById('review-room-name').textContent = document.querySelector('[name="room_name"]').value;
+                // document.getElementById('review-room-name').textContent = document.querySelector('[name="room_name"]').value;
                 document.getElementById('review-room-type').textContent = document.querySelector('[name="room_type_id"]').options[document.querySelector('[name="room_type_id"]').selectedIndex].text;
                 document.getElementById('review-floor').textContent = document.querySelector('[name="floor_number"]').value;
                 // document.getElementById('review-status').textContent = document.querySelector('[name="status"]').value;

@@ -207,7 +207,7 @@ $headerSubtitle = "Manage and charge guests for facility usage";
 
     <!-- Restaurant -->
     <div class="col-xl-3 col-lg-4 col-md-6">
-      <a href="restaurant.php" class="text-decoration-none">
+      <a href="restaurantorder.php" class="text-decoration-none">
         <div class="card facility-card">
           <!-- <span class="stats-badge">67 today</span> -->
           <div class="card-inner">

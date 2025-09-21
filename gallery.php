@@ -71,7 +71,7 @@ $result = $conn->query("SELECT * FROM gallery WHERE is_deleted = 0 ORDER BY id D
           <li class="nav-item"><a class="nav-link" href="index.php#contact">Contact</a></li>
           <li class="nav-item"><a class="nav-link" href="index.php#gallery">Gallery</a></li>
           <li class="nav-item"><a class="nav-link" href="rooms.php">Rooms</a></li>
-          <li class="nav-item ms-3"><a href="login.php" class="btn btn-premium">Login / Sign Up</a></li>
+          <li class="nav-item ms-3"><a href="login.php" class="btn btn-premium">Login</a></li>
         </ul>
       </div>
     </div>

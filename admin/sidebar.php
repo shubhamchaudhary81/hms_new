@@ -164,6 +164,26 @@
             white-space: nowrap;
         }
 
+        /* Sidebar Setup Dropdown */
+        .sidebar-setup-dropdown .nav-link {
+            cursor: pointer;
+        }
+
+        .sidebar-setup-dropdown .sub-link {
+            padding-left: 2.5rem !important;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-setup-dropdown .sub-link:hover {
+            background: linear-gradient(135deg, #a0896b 0%, #8b7355 100%);
+            color: white !important;
+        }
+
+        .sidebar-setup-dropdown .collapse .nav-item+.nav-item {
+            margin-top: 0.25rem;
+        }
+
         .sidebar.collapsed .nav-text {
             opacity: 0;
             width: 0;
@@ -321,9 +341,9 @@
                 <i class="fas fa-hotel"></i>
                 <span class="logo-text">HotelAdmin</span>
             </div>
-            <button class="toggle-btn" id="toggleBtn">
+            <!-- <button class="toggle-btn" id="toggleBtn">
                 <i class="fas fa-chevron-left"></i>
-            </button>
+            </button> -->
         </div>
 
         <ul class="nav-menu">
@@ -334,7 +354,7 @@
                 </a>
             </li>
 
-            <!-- SETUPS GROUP (no dropdown now) -->
+            <!-- SETUPS GROUP (no dropdown now)
             <li class="nav-item group-label">
                 <span class="group-title">
                     <i class="fas fa-cogs"></i> Setups
@@ -358,19 +378,44 @@
                     <span>Add Amenities</span>
                 </a>
             </li>
-            <!-- <li class="nav-item">
-                <a href="#" class="nav-link sub-link">
-                    <i class="fas fa-bed"></i>
-                    <span>Add Room Amenity</span>
-                </a>
-            </li> -->
             <li class="nav-item">
                 <a href="add-roomservices.php" class="nav-link sub-link">
                     <i class="fas fa-concierge-bell"></i>
                     <span>Add Room Services</span>
                 </a>
+            </li> -->
+            <!-- SETUPS GROUP WITH DROPDOWN -->
+            <li class="nav-item sidebar-setup-dropdown">
+                <a class="nav-link d-flex justify-content-left align-items-center" href="#" data-bs-toggle="collapse"
+                    data-bs-target="#setupDropdown" aria-expanded="false">
+                    <!-- <span><i class="fas fa-cogs me-2"></i> Setups</span> -->
+                     <i  class="fas fa-cogs me-3"></i>
+                     <span class="nav-text">Setup</span>
+                 <i class="fas fa-chevron-down ms-auto"></i> 
+                </a>
+                <ul class="collapse list-unstyled ps-3" id="setupDropdown">
+                    <li class="nav-item">
+                        <a href="room-type.php" class="nav-link sub-link">
+                            <i class="fas fa-door-open me-2"></i> Room Type
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="add-extra-service.php" class="nav-link sub-link">
+                            <i class="fas fa-concierge-bell me-2"></i>Add Extra Service
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="add-amenities.php" class="nav-link sub-link">
+                            <i class="fas fa-star me-2"></i>Add Amenities
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="add-roomservices.php" class="nav-link sub-link">
+                            <i class="fas fa-concierge-bell me-2"></i>Add Room Services
+                        </a>
+                    </li>
+                </ul>
             </li>
-
             <!-- OTHER MAIN LINKS -->
             <li class="nav-item" data-tooltip="Rooms">
                 <a href="rooms.php" class="nav-link">
@@ -396,12 +441,12 @@
                     <span class="nav-text">Guests</span>
                 </a>
             </li>
-            <li class="nav-item" data-tooltip="Housekeeping">
+            <!-- <li class="nav-item" data-tooltip="Housekeeping">
                 <a href="housekeeping.php" class="nav-link">
                     <i class="nav-icon fas fa-broom"></i>
                     <span class="nav-text">Housekeeping</span>
                 </a>
-            </li>
+            </li> -->
             <li class="nav-item" data-tooltip="Facilities">
                 <a href="facilities.php" class="nav-link">
                     <i class="nav-icon fas fa-building"></i>
@@ -420,15 +465,35 @@
                     <span class="nav-text">Billing</span>
                 </a>
             </li> -->
-            <li class="nav-item" data-tooltip="Billing">
+            <!-- <li class="nav-item" data-tooltip="Billing">
                 <a href="../guest/logout.php" class="nav-link">
                     <i class="fas fa-sign-out-alt"></i>
                     <span class="nav-text">Logout</span>
                 </a>
-            </li>
+            </li> -->
         </ul>
 
         <div class="user-profile"></div>
+        <li class="nav-item" data-tooltip="Billing">
+            <div class="profile" style="display: flex; flex-direction: row; align-items: center;">
+                <div class="profile-info px-2">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="profile-details">
+                        <div class="profile-name">Admin</div>
+                        <div class="profile-role">Administrator</div>
+                    </div>
+                    <a href="../guest/logout.php" class="nav-link">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="nav-text">Logout</span>
+                    </a>
+                </div>
+            </div>
+            <div class="log-out">
+
+            </div>
+        </li>
     </div>
 
     <!-- Bootstrap JS Bundle with Popper -->

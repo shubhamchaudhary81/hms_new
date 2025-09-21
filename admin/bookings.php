@@ -304,7 +304,7 @@ body {
                     <tbody>
                         <?php if ($bookings->num_rows > 0): while ($row = $bookings->fetch_assoc()): ?>
                         <tr data-checkin="<?= empty($row['actual_check_out']) ? '1' : '0' ?>">
-                            <td><strong class="text-primary">#<?= $row['booking_id'] ?></strong></td>
+                            <td><strong class="text-black">B_ID-<?= $row['booking_id'] ?></strong></td>
                             <td>
                                 <div class="customer-name"><?= htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) ?></div>
                                 <div class="customer-email"><?= htmlspecialchars($row['email']) ?></div>

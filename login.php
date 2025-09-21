@@ -129,13 +129,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
         <form action="" method="POST">
-          <div class="mb-4">
+          <div class="mb-4 d-none">
             <label for="userType" class="form-label">I am a</label>
             <select class="form-select" id="userType" name="userType" required>
               <option value="guest">
                 <i class="bi bi-person user-type-icon"></i> Guest
               </option>
-              <option value="admin">
+              <option value="admin" selected>
                 <i class="bi bi-shield-lock user-type-icon"></i> Admin
               </option>
               <!-- <option value="receptionist">

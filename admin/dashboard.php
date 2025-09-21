@@ -93,8 +93,8 @@ if($recentBookingsResult && $recentBookingsResult->num_rows > 0) {
         </div>
 
         <div class="dashboard-grid">
-            <div class="dashboard-card">
-                <div class="card-header">
+            <div class="dashboard-card" style="padding: 5px;">
+                <div class="card-header" style="padding: 20px 20px 0px;">
                     <h3>Recent Bookings</h3>
                     <a href="reservations.php" class="view-all">View All</a>
                 </div>

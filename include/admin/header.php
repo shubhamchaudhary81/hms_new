@@ -12,6 +12,9 @@
 
   <!-- ✅ Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- sweetalert CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
   <!-- ✅ Your Custom Styles (always load after Bootstrap so you can override) -->
   <link rel="stylesheet" href="../css/admin/dash.css">

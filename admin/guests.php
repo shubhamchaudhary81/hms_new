@@ -8,9 +8,9 @@ include_once '../config/configdatabse.php';
 
 $headerTitle = "Guest Management";
 $headerSubtitle = "Manage guest information and stay details.";
-$buttonText = "Add New Guest";
-$buttonLink = "add-guest.php"; // <- Your target page
-$showButton = true; // Show the button in the header
+// $buttonText = "Add New Guest";
+// $buttonLink = "add-guest.php"; // <- Your target page
+// $showButton = true; // Show the button in the header
 
 // Fetch guests with their latest reservation/booking and room details
 $guests = [];

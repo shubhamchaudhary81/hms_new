@@ -66,7 +66,7 @@ if (!$result) {
           <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
           <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
           <li class="nav-item"><a class="nav-link" href="rooms.php">Rooms</a></li>
-          <li class="nav-item ms-3"><a href="login.php" class="btn btn-premium">Login / Sign Up</a></li>
+          <li class="nav-item ms-3"><a href="login.php" class="btn btn-premium">Login</a></li>
         </ul>
       </div>
     </div>
