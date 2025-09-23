@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_room_type'])) {
         if ($stmt->execute()) {
             $_SESSION['success_message'] = "Room Type added successfully!";
             $stmt->close();
-            header("Location: add-room-type.php"); // redirect to same page
+            header("Location: room-type.php"); // redirect to same page
             exit();
         } else {
             $_SESSION['error_message'] = "Error: " . $stmt->error;

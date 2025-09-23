@@ -1,30 +1,13 @@
 <?php
-include_once '../config/configdatabse.php';
-
 $headerTitle = "Room Type";
 $headerSubtitle = "See all room types available in the system.";
 $buttonText = "Add New Room Type ";
 $buttonLink = "add-room-type.php";
 $showButton = true;
-
-// Pagination setup
-$limit = 15; 
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-if ($page < 1) $page = 1;
-$offset = ($page - 1) * $limit;
-// Fetch total records
-$total_sql = "SELECT COUNT(*) AS total FROM RoomType";
-$total_result = $conn->query($total_sql);
-$total_row = $total_result->fetch_assoc();
-$total_records = $total_row['total'];
-$total_pages = ceil($total_records / $limit);
-
-// Fetch paginated records
-$sql = "SELECT * FROM RoomType ORDER BY created_at ASC LIMIT " . (int)$offset . ", " . (int)$limit;
-$result = $conn->query($sql);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,159 +15,304 @@ $result = $conn->query($sql);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/admin/content.css">
     <link rel="stylesheet" href="../css/admin/room-type.css">
+    <style>
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            /* Needed if using flex */
+            align-items: center;
+            /* Needed if using flex */
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            width: 500px;
+            max-width: 90%;
+        }
+    </style>
 </head>
+
 <body>
     <?php include 'sidebar.php'; ?>
     <div class="main-content">
         <?php include 'header-content.php'; ?>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Room Type</th>
-                        <th>Description</th>
-                        <th>Created At</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($result && $result->num_rows > 0): ?>
-                        <?php while ($row = $result->fetch_assoc()): ?>
-                            <tr>
-                                <td><?= htmlspecialchars($row['room_type_id']) ?></td>
-                                <td><?= htmlspecialchars($row['room_type_name']) ?></td>
-                                <td><?= htmlspecialchars($row['description']) ?></td>
-                                <td><?= htmlspecialchars($row['created_at']) ?></td>
-                                <td>
-                                    <button class="action-btn edit" data-id="<?= $row['room_type_id'] ?>"><i class="fas fa-edit"></i></button>
-                                    <button class="action-btn delete" data-id="<?= $row['room_type_id'] ?>"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
-                        <?php endwhile; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td colspan="5">No room types found.</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
 
-        <!-- Pagination -->
-        <div class="pagination">
-            <?php if ($page > 1): ?>
-                <a href="?page=<?= $page - 1 ?>">Prev</a>
-            <?php endif; ?>
+        <div id="roomTypeData"></div>
+        <!-- Edit Room Type Modal -->
+        <div class="modal" id="roomTypeModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalTitle">Edit Room Type</h2>
+                    <span class="close" style="cursor:pointer">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="roomTypeForm">
+                        <input type="hidden" id="roomTypeId" name="room_type_id">
 
-            <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                <a href="?page=<?= $i ?>" class="<?= $i == $page ? 'active' : '' ?>"><?= $i ?></a>
-            <?php endfor; ?>
+                        <div class="form-group">
+                            <label for="roomTypeName">Room Type Name</label>
+                            <input type="text" id="roomTypeName" name="room_type_name" required>
+                        </div>
 
-            <?php if ($page < $total_pages): ?>
-                <a href="?page=<?= $page + 1 ?>">Next</a>
-            <?php endif; ?>
-        </div>
-    </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description"></textarea>
+                        </div>
 
-    <!-- Add/Edit Room Type Modal -->
-    <div class="modal" id="roomTypeModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modalTitle">Add New Room Type</h2>
-                <span class="close">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form id="roomTypeForm">
-                    <div class="form-group">
-                        <label for="roomTypeName">Room Type Name</label>
-                        <input type="text" id="roomTypeName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea id="description"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="capacity">Capacity</label>
-                        <input type="number" id="capacity" min="1" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="basePrice">Base Price ($)</label>
-                        <input type="number" id="basePrice" step="0.01" min="0" required>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
-                <button class="btn btn-primary" id="saveBtn">Save Room Type</button>
+                        <!-- <div class="form-group">
+                            <label for="capacity">Capacity</label>
+                            <input type="number" id="capacity" name="capacity" min="1" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="basePrice">Base Price ($)</label>
+                            <input type="number" id="basePrice" name="base_price" step="0.01" min="0" required>
+                        </div> -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="cancelBtn">Cancel</button>
+                    <button class="btn btn-primary" id="saveBtn">Save Changes</button>
+                </div>
             </div>
         </div>
-    </div>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            const modal = document.getElementById('roomTypeModal');
+            const closeBtn = document.querySelector('.close');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const saveBtn = document.getElementById('saveBtn');
 
-    <script>
-        // Modal functionality
-        const modal = document.getElementById('roomTypeModal');
-        const addRoomTypeBtn = document.getElementById('addRoomTypeBtn');
-        const closeBtn = document.querySelector('.close');
-        const cancelBtn = document.getElementById('cancelBtn');
-        const saveBtn = document.getElementById('saveBtn');
+            // Close modal
+            const closeModal = () => {
+                modal.style.display = 'none';
+                document.getElementById('roomTypeForm').reset();
+            };
+            closeBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', e => { e.preventDefault(); closeModal(); });
+            window.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 
-        addRoomTypeBtn.addEventListener('click', () => {
-            document.getElementById('modalTitle').textContent = 'Add New Room Type';
-            modal.style.display = 'flex';
-        });
-
-        const closeModal = () => {
-            modal.style.display = 'none';
-            document.getElementById('roomTypeForm').reset();
-        };
-
-        closeBtn.addEventListener('click', closeModal);
-        cancelBtn.addEventListener('click', closeModal);
-
-        saveBtn.addEventListener('click', () => {
-            // Here you would typically save the data to the database
-            alert('Room type saved successfully!');
-            closeModal();
-        });
-
-        // Close modal when clicking outside of it
-        window.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                closeModal();
+            // Toast function
+            function showToast(icon, title) {
+                Swal.fire({
+                    toast: true,
+                    position: 'top-end',
+                    icon: icon,
+                    title: title,
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
             }
-        });
 
-        // Edit and Delete buttons functionality
-        const editButtons = document.querySelectorAll('.action-btn.edit');
-        const deleteButtons = document.querySelectorAll('.action-btn.delete');
+            // Load table and bind buttons
+            function loadRoomTypes(page = 1) {
+                fetch('fetch-roomtypes.php?page=' + page)
+                    .then(res => res.text())
+                    .then(html => {
+                        document.getElementById('roomTypeData').innerHTML = html;
 
-        editButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                document.getElementById('modalTitle').textContent = 'Edit Room Type';
-                // In a real application, you would populate the form with existing data
-                modal.style.display = 'flex';
+                        document.querySelectorAll('.pagination a').forEach(a => {
+                            a.addEventListener('click', e => {
+                                e.preventDefault();
+                                loadRoomTypes(a.dataset.page);
+                            });
+                        });
+
+                        bindEditDelete();
+                    });
+            }
+
+            // Bind edit & delete buttons
+            function bindEditDelete() {
+                // Edit button
+                document.querySelectorAll('.action-btn.edit').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = btn.dataset.id;
+                        fetch('edit-room-type.php?id=' + id)
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data) {
+                                    document.getElementById('roomTypeId').value = data.room_type_id;
+                                    document.getElementById('roomTypeName').value = data.room_type_name;
+                                    document.getElementById('description').value = data.description;
+                                    modal.style.display = 'flex';
+                                }
+                            })
+                            .catch(err => showToast('error', 'Error fetching data'));
+                    });
+                });
+
+                // Delete button
+                document.querySelectorAll('.action-btn.delete').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const id = btn.dataset.id;
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                fetch('delete-room-type.php', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                                    body: 'id=' + id
+                                })
+                                    .then(res => res.text())
+                                    .then(resp => {
+                                        if (resp.trim() === 'success') {
+                                            showToast('success', 'Deleted successfully!');
+                                            loadRoomTypes();
+                                        } else {
+                                            showToast('error', 'Error deleting: ' + resp);
+                                        }
+                                    });
+                            }
+                        });
+                    });
+                });
+            }
+
+            // Save changes
+            saveBtn.addEventListener('click', e => {
+                e.preventDefault();
+                const formData = new FormData(document.getElementById('roomTypeForm'));
+
+                fetch('update-room-type.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(res => res.text())
+                    .then(resp => {
+                        if (resp.trim() === 'success') {
+                            closeModal();
+                            loadRoomTypes();
+                            showToast('success', 'Updated successfully!');
+                        } else {
+                            showToast('error', 'Error updating: ' + resp);
+                        }
+                    });
             });
-        });
 
-        deleteButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                if (confirm('Are you sure you want to delete this room type?')) {
-                    // In a real application, you would delete the record from the database
-                    alert('Room type deleted successfully!');
-                }
-            });
-        });
+            // Initial load
+            loadRoomTypes();
+            // const modal = document.getElementById('roomTypeModal');
+            // const closeBtn = document.querySelector('.close');
+            // const cancelBtn = document.getElementById('cancelBtn');
+            // const saveBtn = document.getElementById('saveBtn');
 
-        // Pagination buttons
-        const paginationButtons = document.querySelectorAll('.pagination button');
-        paginationButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                paginationButtons.forEach(btn => btn.classList.remove('active'));
-                button.classList.add('active');
-            });
-        });
-    </script>
+            // // Close modal
+            // const closeModal = () => {
+            //     modal.style.display = 'none';
+            //     document.getElementById('roomTypeForm').reset();
+            // };
+
+            // closeBtn.addEventListener('click', closeModal);
+            // cancelBtn.addEventListener('click', e => { e.preventDefault(); closeModal(); });
+            // window.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+            // // Load table and bind edit/delete buttons
+            // function loadRoomTypes(page = 1) {
+            //     fetch('fetch-roomtypes.php?page=' + page)
+            //         .then(res => res.text())
+            //         .then(html => {
+            //             document.getElementById('roomTypeData').innerHTML = html;
+
+            //             document.querySelectorAll('.pagination a').forEach(a => {
+            //                 a.addEventListener('click', e => {
+            //                     e.preventDefault();
+            //                     loadRoomTypes(a.dataset.page);
+            //                 });
+            //             });
+
+            //             bindEditDelete();
+            //         });
+            // }
+
+            // // Bind edit & delete buttons
+            // function bindEditDelete() {
+            //     // Edit button
+            //     document.querySelectorAll('.action-btn.edit').forEach(btn => {
+            //         btn.addEventListener('click', () => {
+            //             const id = btn.dataset.id;
+            //             fetch('edit-room-type.php?id=' + id)
+            //                 .then(res => res.json())
+            //                 .then(data => {
+            //                     if (data) {
+            //                         document.getElementById('roomTypeId').value = data.room_type_id;
+            //                         document.getElementById('roomTypeName').value = data.room_type_name;
+            //                         document.getElementById('description').value = data.description;
+            //                         modal.style.display = 'flex';
+            //                     }
+            //                 })
+            //                 .catch(err => console.error('Edit fetch error:', err));
+            //         });
+            //     });
+
+            //     // Delete button
+            //     document.querySelectorAll('.action-btn.delete').forEach(btn => {
+            //         btn.addEventListener('click', () => {
+            //             const id = btn.dataset.id;
+            //             if (confirm('Delete this room type?')) {
+            //                 fetch('delete-room-type.php', {
+            //                     method: 'POST',
+            //                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            //                     body: 'id=' + id
+            //                 })
+            //                     .then(res => res.text())
+            //                     .then(resp => {
+            //                         if (resp.trim() === 'success') {
+            //                             alert('Deleted successfully!');
+            //                             loadRoomTypes();
+            //                         } else {
+            //                             alert('Error deleting: ' + resp);
+            //                         }
+            //                     });
+            //             }
+            //         });
+            //     });
+            // }
+
+            // // Save changes
+            // saveBtn.addEventListener('click', e => {
+            //     e.preventDefault();
+            //     const formData = new FormData(document.getElementById('roomTypeForm'));
+
+            //     fetch('update-room-type.php', {
+            //         method: 'POST',
+            //         body: formData
+            //     })
+            //         .then(res => res.text())
+            //         .then(resp => {
+            //             if (resp.trim() === 'success') {
+            //                 alert('Updated successfully!');
+            //                 closeModal();
+            //                 loadRoomTypes();
+            //             } else {
+            //                 alert('Error updating: ' + resp);
+            //             }
+            //         });
+            // });
+
+            // // Initial load
+            // loadRoomTypes();
+
+        </script>
+    </div>
 </body>
 
 </html>

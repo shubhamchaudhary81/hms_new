@@ -400,17 +400,17 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="add-extra-service.php" class="nav-link sub-link">
+                        <a href="extra-Services.php" class="nav-link sub-link">
                             <i class="fas fa-concierge-bell me-2"></i>Add Extra Service
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="add-amenities.php" class="nav-link sub-link">
+                        <a href="amenities.php" class="nav-link sub-link">
                             <i class="fas fa-star me-2"></i>Add Amenities
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="add-roomservices.php" class="nav-link sub-link">
+                        <a href="room-service.php" class="nav-link sub-link">
                             <i class="fas fa-concierge-bell me-2"></i>Add Room Services
                         </a>
                     </li>
