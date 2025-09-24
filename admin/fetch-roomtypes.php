@@ -32,15 +32,18 @@ $result = $conn->query($sql);
         </tr>
     </thead>
     <tbody>
+
         <?php if ($result && $result->num_rows > 0): ?>
-            <?php while ($row = $result->fetch_assoc()): ?>
+            <?php
+            $i = 1;
+            while ($row = $result->fetch_assoc()): ?>
                 <tr>
-                    <td><?= htmlspecialchars($row['room_type_id']) ?></td>
+                    <td><?= $i++ ?></td>
                     <td><?= htmlspecialchars($row['room_type_name']) ?></td>
                     <td><?= htmlspecialchars($row['description']) ?></td>
                     <!-- <td><?= htmlspecialchars($row['capacity']) ?></td>
                     <td><?= htmlspecialchars($row['base_price']) ?></td> -->
-                    <td><?= htmlspecialchars($row['created_at']) ?></td>
+                    <td><?= date('Y-m-d', strtotime($row['created_at'])) ?></td>
                     <td>
                         <button class="action-btn edit" data-id="<?= $row['room_type_id'] ?>"><i
                                 class="fas fa-edit"></i></button>

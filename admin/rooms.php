@@ -349,7 +349,7 @@ if ($roomTypesResult && $roomTypesResult->num_rows > 0) {
                                             <i class="fas fa-trash"></i>
                                         </button> -->
                                         <button class="btn-action btn-delete"
-                                            onclick="window.location.href='delete.php?delete_room=<?= $room['room_id'] ?>'">
+                                            onclick="window.location.href='delete-room.php?delete_room=<?= $room['room_id'] ?>'">
                                             Delete Room
                                         </button>
 

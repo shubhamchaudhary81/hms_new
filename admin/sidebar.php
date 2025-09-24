@@ -389,9 +389,9 @@
                 <a class="nav-link d-flex justify-content-left align-items-center" href="#" data-bs-toggle="collapse"
                     data-bs-target="#setupDropdown" aria-expanded="false">
                     <!-- <span><i class="fas fa-cogs me-2"></i> Setups</span> -->
-                     <i  class="fas fa-cogs me-3"></i>
-                     <span class="nav-text">Setup</span>
-                 <i class="fas fa-chevron-down ms-auto"></i> 
+                    <i class="fas fa-cogs me-3"></i>
+                    <span class="nav-text">Setup</span>
+                    <i class="fas fa-chevron-down ms-auto"></i>
                 </a>
                 <ul class="collapse list-unstyled ps-3" id="setupDropdown">
                     <li class="nav-item">
@@ -401,17 +401,22 @@
                     </li>
                     <li class="nav-item">
                         <a href="extra-Services.php" class="nav-link sub-link">
-                            <i class="fas fa-concierge-bell me-2"></i>Add Extra Service
+                            <i class="fas fa-concierge-bell me-2"></i> Extra Service
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="amenities.php" class="nav-link sub-link">
-                            <i class="fas fa-star me-2"></i>Add Amenities
+                            <i class="fas fa-star me-2"></i> Amenities
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="room-service.php" class="nav-link sub-link">
-                            <i class="fas fa-concierge-bell me-2"></i>Add Room Services
+                            <i class="fas fa-concierge-bell me-2"></i> Room Services
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="menu-items.php" class="nav-link sub-link">
+                            <i class="fas fa-utensils me-2"></i> Menu Item
                         </a>
                     </li>
                 </ul>

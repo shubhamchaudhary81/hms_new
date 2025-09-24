@@ -15,7 +15,8 @@ $showButton = true;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/admin/content.css">
     <link rel="stylesheet" href="../css/admin/room-type.css">
-    <style>
+    <link rel="stylesheet" href="../css/admin/modal.css">
+    <!-- <style>
         .modal {
             display: none;
             position: fixed;
@@ -27,9 +28,9 @@ $showButton = true;
             overflow: auto;
             background: rgba(0, 0, 0, 0.5);
             justify-content: center;
-            /* Needed if using flex */
+            Needed if using flex
             align-items: center;
-            /* Needed if using flex */
+            Needed if using flex
         }
 
         .modal-content {
@@ -39,7 +40,7 @@ $showButton = true;
             width: 500px;
             max-width: 90%;
         }
-    </style>
+    </style> -->
 </head>
 
 <body>
@@ -68,16 +69,6 @@ $showButton = true;
                             <label for="description">Description</label>
                             <textarea id="description" name="description"></textarea>
                         </div>
-
-                        <!-- <div class="form-group">
-                            <label for="capacity">Capacity</label>
-                            <input type="number" id="capacity" name="capacity" min="1" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="basePrice">Base Price ($)</label>
-                            <input type="number" id="basePrice" name="base_price" step="0.01" min="0" required>
-                        </div> -->
                     </form>
                 </div>
                 <div class="modal-footer">
